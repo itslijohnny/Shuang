@@ -14,12 +14,15 @@ Shuang.app.setting = {
       showKeys: readStorage("showKeys") || "true",
       showPressedKey: readStorage("showPressedKey") || "true",
       disableMobileKeyboard: readStorage("disableMobileKeyboard") || "false",
-      keyboardLayout: readStorage("keyboardLayout") || "qwerty",
+      keyboardLayout: readStorage("keyboardLayout") || 'qwerty',
     }
     /** Applying Settings :: Changing UI **/
     const { scheme, mode, showPic, darkMode, autoNext, autoClear, showKeys, showPressedKey, disableMobileKeyboard, keyboardLayout } = this.config
     Array.prototype.find.call($('#scheme-select').children,
       schemeOption => Shuang.resource.schemeList[scheme].startsWith(schemeOption.innerText)
+    ).selected = true
+    Array.prototype.find.call($('#keyboard-layout-select').children,
+      keyboardLayoutOption => Shuang.resource.keyboardLayoutList[keyboardLayout].startsWith(keyboardLayoutOption.innerText)
     ).selected = true
     $('#mode-select')[Object.keys(Shuang.app.modeList).indexOf(mode)].selected = true
     $('#pic-switcher').checked = showPic === 'true'
@@ -68,17 +71,13 @@ Shuang.app.setting = {
   updateKeyboardLayout() {
     const currentKeyboardLayout = Shuang.resource.keyboardLayout[this.config.keyboardLayout]
         const currentScheme = Shuang.resource.scheme[this.config.scheme]
-        console.log(currentKeyboardLayout)
-        console.log(currentScheme)
         // check if the keyboard layout and scheme is valid
         if (!currentKeyboardLayout || !currentScheme) {
             return
         }
         // reverse map scheme.detail.sheng key and value
         const key2sheng = invertMap(currentScheme.detail.sheng)
-        console.log(key2sheng)
         const key2yun = invertMap(currentScheme.detail.yun)
-        console.log(key2yun)
 
         // update the keyboard layout
         currentKeyboardLayout.layout.forEach((element, rowIdx) => {
@@ -243,7 +242,6 @@ Shuang.app.setting = {
         tips.appendChild(newLine)
       }
     }
-    // $('#pic').setAttribute('src', `img/${this.config.scheme}.png`)
     // $('#pic').setAttribute('src', `img/${this.config.scheme}.svg`)
     $('#pic').setAttribute('src', `img/keyboard.svg`)
   }
