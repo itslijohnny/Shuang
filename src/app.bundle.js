@@ -9,6 +9,8 @@ const Shuang = {
     dict: {},
     schemeList: {},
     scheme: {},
+    keyboardLayoutList: {},
+    keyboardLayout: {},
     emoji: {
       right: '✅', wrong: '❎'
     }
@@ -273,6 +275,11 @@ Shuang.app.modeList = {
   }
 }
 /******************** EOF mode-list.js ************************/
+/************************ keyboard-layout-list.js ************************/
+Shuang.resource.keyboardLayoutList = {
+    qwerty: 'qwerty',
+    colemak: 'colemak',
+}/******************** EOF keyboard-layout-list.js ************************/
 /************************ core.js ************************/
 /** last changed: 2019.8.23 */
 
@@ -282,6 +289,7 @@ Shuang.core.model = class Model {
     this.yun = yun.toLowerCase()
     this.dict = Shuang.resource.dict[this.sheng][this.yun]
     this.scheme = new Set()
+    this.keyboardLayout = new Set()
     this.view = {
       sheng: this.sheng.toUpperCase().slice(0, 1) + this.sheng.slice(1),
       yun: this.yun
@@ -376,9 +384,10 @@ Shuang.app.setting = {
       showKeys: readStorage("showKeys") || "true",
       showPressedKey: readStorage("showPressedKey") || "true",
       disableMobileKeyboard: readStorage("disableMobileKeyboard") || "false",
+      keyboardLayout: readStorage("keyboardLayout") || "qwerty",
     }
     /** Applying Settings :: Changing UI **/
-    const { scheme, mode, showPic, darkMode, autoNext, autoClear, showKeys, showPressedKey, disableMobileKeyboard } = this.config
+    const { scheme, mode, showPic, darkMode, autoNext, autoClear, showKeys, showPressedKey, disableMobileKeyboard, keyboardLayout } = this.config
     Array.prototype.find.call($('#scheme-select').children,
       schemeOption => Shuang.resource.schemeList[scheme].startsWith(schemeOption.innerText)
     ).selected = true
@@ -392,6 +401,7 @@ Shuang.app.setting = {
     $('#disable-mobile-keyboard').checked = disableMobileKeyboard === 'true'
     /** Applying Settings :: Invoking Actions  **/
     this.setScheme(Shuang.resource.schemeList[scheme], false)
+    this.setKeyboardLayout(Shuang.resource.keyboardLayoutList[keyboardLayout])
     this.setMode(Shuang.app.modeList[mode].name)
     this.setPicVisible(showPic)
     this.setDarkMode(darkMode)
@@ -411,8 +421,65 @@ Shuang.app.setting = {
       Shuang.core.current.beforeJudge()
       this.updateKeysHint()
       this.updateTips()
+      this.updateKeyboardLayout()
     })
     writeStorage('scheme', this.config.scheme)
+  },
+  setKeyboardLayout(layoutName) {
+    this.config.keyboardLayout = Object.keys(Shuang.resource.keyboardLayoutList)[
+        Object.values(Shuang.resource.keyboardLayoutList)
+            .findIndex(layout => layout.startsWith(layoutName))
+    ]
+    importJS('keyboard-layout/' + this.config.keyboardLayout, () => {
+      this.updateKeyboardLayout()
+    })
+    writeStorage('keyboardLayout', this.config.keyboardLayout)
+  },
+  updateKeyboardLayout() {
+    const currentKeyboardLayout = Shuang.resource.keyboardLayout[this.config.keyboardLayout]
+        const currentScheme = Shuang.resource.scheme[this.config.scheme]
+        console.log(currentKeyboardLayout)
+        console.log(currentScheme)
+        // check if the keyboard layout and scheme is valid
+        if (!currentKeyboardLayout || !currentScheme) {
+            return
+        }
+        // reverse map scheme.detail.sheng key and value
+        const key2sheng = invertMap(currentScheme.detail.sheng)
+        console.log(key2sheng)
+        const key2yun = invertMap(currentScheme.detail.yun)
+        console.log(key2yun)
+
+        // update the keyboard layout
+        currentKeyboardLayout.layout.forEach((element, rowIdx) => {
+            element.split('').forEach((key, colIdx) => {
+                var yunSpanList = ''
+                if (Array.isArray(key2yun[key])) {
+                    key2yun[key].forEach(e => {
+                        yunSpanList += `<div><span class="key-character">${e}</span></div>`
+                    })
+                } else if (key2yun[key] != undefined) {
+                    yunSpanList += `<div><span class="key-character">${key2yun[key]}</span></div>`
+                }
+                $(`#row-${rowIdx + 1}-col-${colIdx + 1}`).innerHTML = `
+                <div class="key-container">
+                    <div class="top">
+                        <div class="left">
+                            <span class="key-character">${key.toUpperCase()}</span>
+                        </div>
+                        <div class="right">
+                            <span class="key-character">${key == key2sheng[key] || key2sheng[key] == undefined ? '' : key2sheng[key]}</span>
+                        </div>
+                    </div>
+                    <div class="bottom">
+                        <div class="left"></div>
+                        <div class="right">
+                            ${yunSpanList}
+                        </div>
+                    </div>
+                </div>`
+            })
+        });
   },
   setMode(modeName) {
     Shuang.core.history = []
@@ -547,7 +614,8 @@ Shuang.app.setting = {
       }
     }
     // $('#pic').setAttribute('src', `img/${this.config.scheme}.png`)
-    $('#pic').setAttribute('src', `img/${this.config.scheme}.svg`)
+    // $('#pic').setAttribute('src', `img/${this.config.scheme}.svg`)
+    $('#pic').setAttribute('src', `img/keyboard.svg`)
   }
 }
 
@@ -563,6 +631,21 @@ function detectDarkMode() {
 
 function readStorage(key = '') { return localStorage.getItem(key) }
 function writeStorage(key = '', value = '') { localStorage.setItem(key, value) }
+
+function invertMap(src) {
+    var dest = {}
+    // travel src fields
+    for (let [sheng, key] of Object.entries(src)) {
+        if (!dest[key]) {
+            dest[key] = sheng
+        } else if (Array.isArray(dest[key])) {
+            dest[key].push(sheng)
+        } else { 
+            dest[key] = [dest[key], sheng]
+        }
+    }    
+    return dest
+}
 /******************** EOF setting.js ************************/
 /************************ action.js ************************/
 /** last changed: 2022.3.6 */
@@ -610,6 +693,11 @@ Shuang.app.action = {
     renderSelect($('#scheme-select'), schemeOptions, value => {
       Shuang.app.setting.setScheme(value)
     })
+
+    renderSelect($('#keyboard-layout-select'), [...Object.values(Shuang.resource.keyboardLayoutList)], value => {
+        Shuang.app.setting.setKeyboardLayout(value)
+    })
+
     renderSelect($('#mode-select'), Object.values(Shuang.app.modeList).map(mode => mode.name), value => {
       Shuang.app.setting.setMode(value)
       this.next()

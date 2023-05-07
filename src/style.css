@@ -117,7 +117,7 @@ body {
   left: 0px;
   right: 0px;
   z-index: 2;
-  opacity: 0.2;
+  /* opacity: 0.2; */
 }
 
 .keyboard .keys .row-2 {
@@ -136,6 +136,57 @@ body {
   /** 180 / 1928 * 700 */
   height: 64.5px;
   float: left;
+}
+
+.keyboard .keys .key-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.keyboard .keys .key .top {
+    display: flex;
+    flex: 2;
+}
+
+.keyboard .keys .key .top .left {
+    display: flex;
+    flex: 1;
+}
+
+.keyboard .keys .key .top .left .key-character {
+    margin: auto;
+}
+
+.keyboard .keys .key .top .right {
+    display: flex;
+    flex: 1;
+}
+
+.keyboard .keys .key .top .right .key-character {
+    margin: auto;
+}
+
+.keyboard .keys .key .bottom {
+    flex: 3;
+    display: flex;
+    flex-direction: row;
+}
+
+.keyboard .keys .key .bottom .left {
+    flex: 1;
+}
+
+.keyboard .keys .key .bottom .right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    padding-right: 8%;
+}
+
+.keyboard .keys .key .bottom .right span {
+    margin: auto;
 }
 
 .keyboard .keys .key.answer {
