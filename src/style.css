@@ -286,6 +286,7 @@ body {
 .footer {
   margin: 20px auto;
   width: 100%;
+  display: flex;
 }
 
 /* wx */
@@ -323,11 +324,10 @@ body {
 /* copyright */
 .copyright {
   min-width: 250px;
-  position: relative;
-  float: left;
-  left: 25px;
-  text-align: left;
-  margin-bottom: 20px;
+  /* position: relative; */
+  /* float: left; */
+  text-align: center;
+  margin: auto;
 }
 
 .copyright span {
