@@ -191,11 +191,11 @@ body {
 }
 
 .keyboard .keys .key.answer {
-  background-color: #007700;
+  background-color: #00770077;
 }
 
 .keyboard .keys .key.pressed {
-  background-color: #02b9ff;
+  background-color: #02b9ff77;
 }
 
 .keyboard .pic {
@@ -396,9 +396,9 @@ body {
 }
 
 .dark-mode .keyboard .keys .key.answer {
-  background-color: #77FF77 !important;
+  background-color: #77FF7777 !important;
 }
 
 .dark-mode .keyboard .keys .key.pressed {
-  background-color: #ffec02 !important;
+  background-color: #ffec0277 !important;
 }
