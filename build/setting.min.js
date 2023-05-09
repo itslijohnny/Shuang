@@ -111,6 +111,7 @@ Shuang.app.setting = {
         })
     })
     // update other-container
+    $(`#other-container`).innerHTML = ''
     for (let [py, key] of Object.entries(currentScheme.detail.other)) {
         $(`#other-container`).innerHTML += `
         <div class="other-key-container">
