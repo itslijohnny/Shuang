@@ -109,7 +109,17 @@ Shuang.app.setting = {
                 </div>
             </div>`
         })
-    });
+    })
+    // update other-container
+    for (let [py, key] of Object.entries(currentScheme.detail.other)) {
+        $(`#other-container`).innerHTML += `
+        <div class="other-key-container">
+            <div>
+                <span class="py">${py}</span>
+                <span class="other-key">${key}</span>
+            </div>
+        </div>`
+    }
   },
   setMode(modeName) {
     Shuang.core.history = []

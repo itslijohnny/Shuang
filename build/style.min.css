@@ -156,6 +156,7 @@ body {
 
 .keyboard .keys .key .top .left .key-character {
     margin: auto;
+    font-weight: bold;
 }
 
 .keyboard .keys .key .top .right {
@@ -218,6 +219,36 @@ body {
   .keyboard .pic {
     filter: none;
   }
+}
+
+.keyboard #other-container {
+    display: flex;
+    width: 50%;
+    height: 32px;
+    margin: auto;
+}
+
+.keyboard .other-container .other-key-container:last-child  {
+    border-right: 1px black solid;
+}
+
+.keyboard .other-container .other-key-container {
+    flex: 1;
+    border: 1px black solid;
+    border-right: 0;
+}
+
+.keyboard .other-container .other-key-container div {
+    height: 100%;
+    display: flex;
+}
+
+.keyboard .other-container .other-key-container div span {
+    margin: auto;
+}
+
+.keyboard .other-container .other-key-container .other-key {
+    font-weight: bold;
 }
 
 .keyboard .tips {
@@ -352,6 +383,7 @@ body {
 .dark-mode * {
   background-color: #333 !important;
   color: #ccc !important;
+  border-color: #ccc !important;
 }
 
 .dark-mode .workspace .col .row input {
