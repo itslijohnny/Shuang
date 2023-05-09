@@ -378,12 +378,11 @@ Shuang.app.setting = {
       scheme: readStorage('scheme') || 'ziranma',
       mode: readStorage('mode') || 'all-random',
       showPic: readStorage('showPic') || 'true',
-      darkMode: readStorage('darkMode') || detectDarkMode().toString(),
+      darkMode: readStorage('darkMode') || 'true',
       autoNext: readStorage('autoNext') || 'true',
       autoClear: readStorage('autoClear') || 'true',
       showKeys: readStorage("showKeys") || "true",
       showPressedKey: readStorage("showPressedKey") || "true",
-      disableMobileKeyboard: readStorage("disableMobileKeyboard") || "false",
       keyboardLayout: readStorage("keyboardLayout") || 'qwerty',
     }
     /** Applying Settings :: Changing UI **/
@@ -401,7 +400,6 @@ Shuang.app.setting = {
     $('#auto-clear-switcher').checked = autoClear === 'true'
     $('#show-keys').checked = showKeys === 'true'
     $('#show-pressed-key').checked = showPressedKey === 'true'
-    $('#disable-mobile-keyboard').checked = disableMobileKeyboard === 'true'
     /** Applying Settings :: Invoking Actions  **/
     this.setScheme(Shuang.resource.schemeList[scheme], false)
     this.setKeyboardLayout(Shuang.resource.keyboardLayoutList[keyboardLayout])
@@ -412,7 +410,6 @@ Shuang.app.setting = {
     this.setAutoClear(autoClear)
     this.setShowKeys(showKeys)
     this.setShowPressedKey(showPressedKey)
-    this.setDisableMobileKeyboard(disableMobileKeyboard)
   },
   setScheme(schemeName, next = true) {
     this.config.scheme = Object.keys(Shuang.resource.schemeList)[
@@ -512,10 +509,8 @@ Shuang.app.setting = {
     this.config.showPic = bool.toString()
     if (this.config.showPic === 'false') {
       $('#keyboard').style.display = 'none'
-      $('#pic-placeholder').style.display = 'none'
     } else if (this.config.showPic === 'true') {
       $('#keyboard').style.display = 'block'
-      $('#pic-placeholder').style.display = 'block'
     }
     writeStorage('showPic', this.config.showPic)
     this.updateKeysHintLayoutRatio()
@@ -573,33 +568,8 @@ Shuang.app.setting = {
     this.updateKeysHintLayoutRatio()
   },
   updateKeysHintLayoutRatio() {
-    if ($('body').scrollWidth < 700) {
-      const width = $('body').scrollWidth === 310 ? 310 : $('#pic').scrollWidth
-      const ratio = 1874 / 1928 * width / 680
-      if (navigator && navigator.userAgent && /firefox/i.test(navigator.userAgent)) {
-        // Firefox 不支持 zoom
-        $('#keys').style.transform = `scale(${ratio})`
-        $('#keys').style.transformOrigin = `left top`
-        $('#keys').style.margin = `${ratio * 10}px`
-        $('#pic-placeholder').style.height = `${width / 680 * 300}px`
-      } else {
-        $('#keys').style.marginLeft = '10px'
-        $('#keys').style.zoom = ratio
-        $('#pic-placeholder').style.zoom = ratio
-      }
-    } else {
-      if (navigator && navigator.userAgent && /firefox/i.test(navigator.userAgent)) {
-        // Firefox 不支持 zoom
-        $('#keys').style.transform = 'unset'
-        $('#keys').style.transformOrigin = 'unset'
-        $('#pic-placeholder').style.height = '300px'
-        $('#keys').style.margin = `10px auto`
-      } else {
-        $('#keys').style.marginLeft = 'auto'
-        $('#keys').style.zoom = 'unset'
-        $('#pic-placeholder').style.zoom = 'unset'
-      }
-    }
+    $('#keys').style.marginLeft = 'auto'
+    $('#keys').style.zoom = 'unset'
   },
   updatePressedKeyHint(k) {
     if (this.config.showPressedKey === 'false' || !k) return
@@ -629,8 +599,6 @@ Shuang.app.setting = {
         tips.appendChild(newLine)
       }
     }
-    // $('#pic').setAttribute('src', `img/${this.config.scheme}.svg`)
-    $('#pic').setAttribute('src', `img/keyboard.svg`)
   }
 }
 

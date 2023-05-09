@@ -112,22 +112,17 @@ body {
 .keyboard .keys {
   /** 1874 / 1928 * 700 */
   margin: 10px auto;
-  width: 680px;
-  position: absolute;
-  left: 0px;
-  right: 0px;
-  z-index: 2;
-  /* opacity: 0.2; */
 }
 
 .keyboard .keys .row-2 {
   /** 90 / 1928 * 700 */
-  margin-left: 33px;
+  margin-top: 10px;
 }
 
 .keyboard .keys .row-3 {
   /** 180 / 1928 * 700 */
-  margin-left: 65px;
+  margin-top: 10px;
+  margin-right: 165px;
 }
 
 .keyboard .keys .key {
@@ -135,7 +130,17 @@ body {
   width: 64.5px;
   /** 180 / 1928 * 700 */
   height: 64.5px;
-  float: left;
+  border: 2px black solid;
+  display: inline-block;
+  padding: 4px;
+}
+
+.keyboard .keys .underline .top .left {
+    text-decoration: underline;
+}
+
+.keyboard .keys .row-2 .default {
+    border-color: blue;
 }
 
 .keyboard .keys .key-container {
@@ -191,11 +196,11 @@ body {
 }
 
 .keyboard .keys .key.answer {
-  background-color: #00770077;
+  background-color: #007700;
 }
 
 .keyboard .keys .key.pressed {
-  background-color: #02b9ff77;
+  background-color: #02b9ff;
 }
 
 .keyboard .pic {
@@ -396,9 +401,13 @@ body {
 }
 
 .dark-mode .keyboard .keys .key.answer {
-  background-color: #77FF7777 !important;
+  background-color: #77FF77 !important;
 }
 
 .dark-mode .keyboard .keys .key.pressed {
-  background-color: #ffec0277 !important;
+  background-color: #ffec02 !important;
+}
+
+.dark-mode .keyboard .keys .row-2 .default {
+    border-color: cyan !important;
 }

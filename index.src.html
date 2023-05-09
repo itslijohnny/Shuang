@@ -56,10 +56,6 @@
       <label for="show-pressed-key" class="title">显示实时按键：</label>
       <input type="checkbox" id="show-pressed-key">
     </div>
-    <div class="menu">
-      <label for="disable-mobile-keyboard" class="title">禁用手机键盘：</label>
-      <input type="checkbox" id="disable-mobile-keyboard">
-    </div>
   </div>
   <div class="workspace">
     <div class="col">
@@ -90,16 +86,16 @@
         <div id="row-1-col-10" class="key"></div>
       </div>
       <div class="row-2">
-        <div id="row-2-col-1" class="key"></div>
-        <div id="row-2-col-2" class="key"></div>
-        <div id="row-2-col-3" class="key"></div>
-        <div id="row-2-col-4" class="key"></div>
+        <div id="row-2-col-1" class="key default"></div>
+        <div id="row-2-col-2" class="key default"></div>
+        <div id="row-2-col-3" class="key default"></div>
+        <div id="row-2-col-4" class="key default underline"></div>
         <div id="row-2-col-5" class="key"></div>
         <div id="row-2-col-6" class="key"></div>
-        <div id="row-2-col-7" class="key"></div>
-        <div id="row-2-col-8" class="key"></div>
-        <div id="row-2-col-9" class="key"></div>
-        <div id="row-2-col-10" class="key"></div>
+        <div id="row-2-col-7" class="key default underline"></div>
+        <div id="row-2-col-8" class="key default"></div>
+        <div id="row-2-col-9" class="key default"></div>
+        <div id="row-2-col-10" class="key default"></div>
       </div>
       <div class="row-3">
         <div id="row-3-col-1" class="key"></div>
@@ -111,26 +107,10 @@
         <div id="row-3-col-7" class="key"></div>
       </div>
     </div>
-    <img class="pic" id="pic">
-    <img class="pic-placeholder" id="pic-placeholder">
     <div class="other-container" id="other-container"></div>
     <div class="tips" id="tips"></div>
   </div>
-  <!-- <div class="manual"> -->
-    <!-- <p>1. 切换至系统自带的英文输入法</p> -->
-    <!-- <p>2. 空格键 / 回车键 切换或清空</p> -->
-    <!-- <p>3. Tab 键 显示答案（可能不唯一）</p> -->
-    <!-- <p>4. 手机练习也可使用微信小程序</p> -->
-    <!-- <p>5. 使用 <a title="立即下载 Chrome 浏览器" href="https://www.google.cn/chrome" target="_blank">Chrome 浏览器</a> 体验最佳</p> -->
-    <!-- <p>6. 查看 <a title="双拼输入介绍" href="https://sspai.com/post/42667" target="_blank">双拼输入介绍</a></p> -->
-  <!-- </div> -->
   <div class="footer">
-    <!-- <div class="wx" id="wx"> -->
-      <!-- <span id="wx-title">微信小程序：</span> -->
-      <!-- <span id="wx-name">双拼练习</span> -->
-      <!-- <img id="wx-qr" hidden="hidden" -->
-        <!-- src="https://api.ihint.me/qr.php?https://mp.weixin.qq.com/a/~Jaww_jP-YK1G39fiZ01Qxg~~"> -->
-    <!-- </div> -->
     <div class="copyright">
         <span>基于 @ BlueSky | v5.18 2022.3.6 更新</span>
         <a title="" href="https://github.com/BlueSky-07/Shuang"
@@ -143,29 +123,8 @@
         <img src="https://img.shields.io/badge/author-%40er1c--zh-yellowgreen?style=flat-square"/>
         <object data="https://img.shields.io/badge/repo-er1c--zh%2FShuang-lightgrey?logo=github&style=flat-square&link=https://github.com/er1c-zh/Shuang"></object>
         <object data="https://img.shields.io/badge/blog-lightgrey?style=flat-square&link=https://blog.er1c.dev"></object>
-      <!-- <span>键位图 <a title="查看包含 Dvorak 键盘布局的键位图" href="https://api.ihint.me/keyboard" -->
-          <!-- target="_blank">https://api.ihint.me/keyboard</a></span> -->
-      <!-- <br> -->
-      <!-- <span>字帖 <a title="字帖" href="https://api.ihint.me/zi" target="_blank">https://api.ihint.me/zi</a></span> -->
-      <!-- <br> -->
-      <!-- <a title="iOS/macOS 原生双拼输入法常见方案设置指南" href="https://sspai.com/post/60751" target="_blank"> -->
-        <!-- iOS/macOS 原生双拼输入法常见方案设置指南 -->
-      <!-- </a> -->
     </div>
-    <!-- <div class="pays" id="pay"> -->
-      <!-- <span class="pay-title">支持开发者：</span> -->
-      <!-- <span class="pay-name" id="alipay">支付宝</span> -->
-      <!-- <img id="alipay-qr" hidden="hidden" -->
-        <!-- src="https://api.ihint.me/qr.php?HTTPS://QR.ALIPAY.COM/FKX05370OGFIX8QOBKXS35"> -->
-      <!-- <span class="pay-name" id="wxpay">微信</span> -->
-      <!-- <img id="wxpay-qr" hidden="hidden" src="https://api.ihint.me/wxpay.jpg"> -->
-    <!-- </div> -->
   </div>
-  <!-- <img src="https://api.ihint.me/statistics.php?site=shuang" hidden="hidden"> -->
-  <!--[if IE]>
-  <script src="https://cdn.bootcdn.net/ajax/libs/babel-polyfill/7.12.1/polyfill.min.js"></script>
-  <script src="https://cdn.bootcdn.net/ajax/libs/classlist/2014.01.31/classList.min.js"></script>
-  <![endif]-->
   <script src="build/app.min.js"></script>
 </body>
 
