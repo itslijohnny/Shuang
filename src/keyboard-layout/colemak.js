@@ -3,8 +3,8 @@ Shuang.resource.keyboardLayout.colemak = {
     name: 'colemak',
     tips: ['colemak'],
     layout: [
-        'qwfpgjluy;',
+        'qwfpgjluy*',
         'arstdhneio',
-        'zxcvbkm',
+        'zxcvbkm***',
     ]
 }

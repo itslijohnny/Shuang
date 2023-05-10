@@ -4,7 +4,7 @@ Shuang.resource.keyboardLayout.qwerty = {
     tips: ['qwerty'],
     layout: [
         'qwertyuiop',
-        'asdfghjkl;',
-        'zxcvbnm',
+        'asdfghjkl*',
+        'zxcvbnm***',
     ]
 }

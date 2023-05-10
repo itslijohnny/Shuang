@@ -92,36 +92,6 @@ Shuang.app.action = {
     $('#show-pressed-key').addEventListener('change', e => {
       Shuang.app.setting.setShowPressedKey(e.target.checked)
     })
-    $('#disable-mobile-keyboard').addEventListener('change', e => {
-      Shuang.app.setting.setDisableMobileKeyboard(e.target.checked)
-    })
-    $('.pay-name#alipay').addEventListener('mouseover', () => {
-      Shuang.app.action.qrShow('alipay-qr')
-    })
-    $('#alipay-qr').addEventListener('click', e => {
-      Shuang.app.action.qrHide(e.target)
-    })
-    $('#alipay-qr').addEventListener('mouseout', e => {
-      Shuang.app.action.qrHide(e.target)
-    })
-    $('.pay-name#wxpay').addEventListener('mouseover', () => {
-      Shuang.app.action.qrShow('wxpay-qr')
-    })
-    $('#wxpay-qr').addEventListener('click', e => {
-      Shuang.app.action.qrHide(e.target)
-    })
-    $('#wxpay-qr').addEventListener('mouseout', e => {
-      Shuang.app.action.qrHide(e.target)
-    })
-    $('#wx-name').addEventListener('mouseover', () => {
-      Shuang.app.action.qrShow('wx-qr')
-    })
-    $('#wx-qr').addEventListener('click', e => {
-      Shuang.app.action.qrHide(e.target)
-    })
-    $('#wx-qr').addEventListener('mouseout', e => {
-      Shuang.app.action.qrHide(e.target)
-    })
     $('#dict').addEventListener('click', () => {
       Shuang.core.current.beforeJudge()
       $('#a').value = Shuang.core.current.scheme.values().next().value

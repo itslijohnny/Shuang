@@ -112,17 +112,19 @@ body {
 .keyboard .keys {
   /** 1874 / 1928 * 700 */
   margin: 10px auto;
+  min-width: 1000px;
 }
 
 .keyboard .keys .row-2 {
   /** 90 / 1928 * 700 */
   margin-top: 10px;
+  margin-left: 40px;
 }
 
 .keyboard .keys .row-3 {
   /** 180 / 1928 * 700 */
   margin-top: 10px;
-  margin-right: 165px;
+  margin-left: 120px;
 }
 
 .keyboard .keys .key {
@@ -229,7 +231,7 @@ body {
 .keyboard #other-container {
     display: flex;
     width: 50%;
-    height: 32px;
+    height: 64px;
     margin: auto;
 }
 
