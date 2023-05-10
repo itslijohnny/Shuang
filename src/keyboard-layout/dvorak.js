@@ -3,8 +3,8 @@ Shuang.resource.keyboardLayout.dvorak = {
     name: 'dvorak',
     tips: ['dvorak'],
     layout: [
-        '***pyfgcrl',
+        '   pyfgcrl',
         'aoeuidhtns',
-        '*qjkxbmwvz',
+        ' qjkxbmwvz',
     ]
 }

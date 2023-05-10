@@ -116,16 +116,22 @@ body {
   min-width: 1000px;
 }
 
+.keyboard .keys .row-1 {
+  font-size: 0;
+}
+
 .keyboard .keys .row-2 {
   /** 90 / 1928 * 700 */
   margin-top: 10px;
   margin-left: 40px;
+  font-size: 0;
 }
 
 .keyboard .keys .row-3 {
   /** 180 / 1928 * 700 */
   margin-top: 10px;
   margin-left: 120px;
+  font-size: 0;
 }
 
 .keyboard .keys .key {
@@ -136,6 +142,9 @@ body {
   border: 2px black solid;
   display: inline-block;
   padding: 4px;
+  font-size: 16px;
+  margin-right: 10px;
+  overflow: hidden;
 }
 
 .keyboard .keys .underline .top .left {
@@ -143,7 +152,7 @@ body {
 }
 
 .keyboard .keys .row-2 .default {
-    border-color: blue;
+    border-color: #0077FF;
 }
 
 .keyboard .keys .key-container {
@@ -199,11 +208,11 @@ body {
 }
 
 .keyboard .keys .key.answer {
-  background-color: #007700;
+  background-color: #77FF77;
 }
 
 .keyboard .keys .key.pressed {
-  background-color: #02b9ff;
+  background-color: #FFEC02;
 }
 
 .keyboard .pic {
@@ -408,7 +417,7 @@ body {
 }
 
 .dark-mode .keyboard .keys .key.pressed {
-  background-color: #ffec02 !important;
+  background-color: #FFEC02 !important;
 }
 
 .dark-mode .keyboard .keys .row-2 .default {
