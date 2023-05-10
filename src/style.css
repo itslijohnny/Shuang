@@ -84,6 +84,7 @@ body {
 .workspace .col .row .btn {
   display: inline-block;
   font-size: 32px;
+  visibility: hidden;
 }
 
 .workspace .col .row input {
