@@ -1,1 +1,134 @@
-<!doctypehtml><meta charset="UTF-8"><title>双拼练习 @ BlueSky</title><meta http-equiv="X-UA-Compatible"content="ie=EmulateIE9, chrome=1"><meta name="viewport"content="width=device-width,initial-scale=1"><link rel="stylesheet"href="build/style.min.css"><meta name="keywords"content="双拼,双拼输入,双拼练习,双拼入门,双拼教程,自然码,小鹤双拼"><meta name="description"content="帮助你快速上手双拼输入法，也可在微信小程序中搜索“双拼练习”使用。"><div class="header"><div class="menu"><label for="scheme-select"class="title">双拼方案：</label> <select id="scheme-select"></select></div><div class="menu"><label for="keyboard-layout-select"class="title">键盘布局：</label> <select id="keyboard-layout-select"></select></div><div class="menu"><label for="mode-select"class="title">练习模式：</label> <select id="mode-select"></select></div><div class="menu"><span class="title">模式说明：</span> <span id="mode-desc"></span></div></div><div class="header"><div class="menu"><label for="pic-switcher"class="title">显示键位图：</label> <input type="checkbox"id="pic-switcher"></div><div class="menu"><label for="dark-mode-switcher"class="title">夜间模式：</label> <input type="checkbox"id="dark-mode-switcher"></div><div class="menu"><label for="auto-next-switcher"class="title">正确时自动切换：</label> <input type="checkbox"id="auto-next-switcher"></div><div class="menu"><label for="auto-clear-switcher"class="title">错误时自动清空：</label> <input type="checkbox"id="auto-clear-switcher"></div><div class="menu"><label for="show-keys"class="title">显示按键提示：</label> <input type="checkbox"id="show-keys"></div><div class="menu"><label for="show-pressed-key"class="title">显示实时按键：</label> <input type="checkbox"id="show-pressed-key"></div></div><div class="workspace"><div class="col"><span class="dict"id="dict"></span></div><div class="col"><div class="row"><span class="q"id="q"></span></div><div class="row"><input id="a"maxlength="2"autofocus="autofocus"autocomplete="off"><div class="btn"id="btn"></div></div></div></div><div class="keyboard"id="keyboard"><div class="keys"id="keys"><div class="row-1"><div id="row-1-col-1"class="key"></div><div id="row-1-col-2"class="key"></div><div id="row-1-col-3"class="key"></div><div id="row-1-col-4"class="key"></div><div id="row-1-col-5"class="key"></div><div id="row-1-col-6"class="key"></div><div id="row-1-col-7"class="key"></div><div id="row-1-col-8"class="key"></div><div id="row-1-col-9"class="key"></div><div id="row-1-col-10"class="key"></div></div><div class="row-2"><div id="row-2-col-1"class="key default"></div><div id="row-2-col-2"class="key default"></div><div id="row-2-col-3"class="key default"></div><div id="row-2-col-4"class="key default underline"></div><div id="row-2-col-5"class="key"></div><div id="row-2-col-6"class="key"></div><div id="row-2-col-7"class="key default underline"></div><div id="row-2-col-8"class="key default"></div><div id="row-2-col-9"class="key default"></div><div id="row-2-col-10"class="key default"></div></div><div class="row-3"><div id="row-3-col-1"class="key"></div><div id="row-3-col-2"class="key"></div><div id="row-3-col-3"class="key"></div><div id="row-3-col-4"class="key"></div><div id="row-3-col-5"class="key"></div><div id="row-3-col-6"class="key"></div><div id="row-3-col-7"class="key"></div><div id="row-3-col-8"class="key"></div><div id="row-3-col-9"class="key"></div><div id="row-3-col-10"class="key"></div></div></div><div class="other-container"id="other-container"></div><div class="tips"id="tips"></div></div><div class="footer"><div class="copyright"><span>基于 @ BlueSky | v5.18 2022.3.6 更新</span> <a title=""href="https://github.com/BlueSky-07/Shuang"target="_blank">https://github.com/BlueSky-07/Shuang</a><br><br><span>增加了对多键盘格式的支持。</span><br><br><img src="https://img.shields.io/badge/author-%40er1c--zh-yellowgreen?style=flat-square"> <object data="https://img.shields.io/badge/repo-er1c--zh%2FShuang-lightgrey?logo=github&style=flat-square&link=https://github.com/er1c-zh/Shuang"></object> <object data="https://img.shields.io/badge/blog-lightgrey?style=flat-square&link=https://blog.er1c.dev"></object></div></div><script src="build/app.min.js"></script>
+<!-- last changed: 2022.3.6 -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>双拼练习 @ BlueSky</title>
+  <meta http-equiv="X-UA-Compatible" content="ie=EmulateIE9, chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="build/style.min.css">
+  <meta name="keywords" content="双拼,双拼输入,双拼练习,双拼入门,双拼教程,自然码,小鹤双拼" />
+  <meta name="description" content="帮助你快速上手双拼输入法，也可在微信小程序中搜索“双拼练习”使用。" />
+</head>
+
+<body>
+  <div class="header">
+    <div class="menu">
+      <label for="scheme-select" class="title">双拼方案：</label>
+      <select id="scheme-select"></select>
+    </div>
+    <div class="menu">
+        <label for="keyboard-layout-select" class="title">键盘布局：</label>
+        <select id="keyboard-layout-select"></select>
+    </div>
+    <div class="menu">
+      <label for="mode-select" class="title">练习模式：</label>
+      <select id="mode-select"></select>
+    </div>
+    <div class="menu">
+      <span class="title">模式说明：</span>
+      <span id="mode-desc"></span>
+    </div>
+  </div>
+  <div class="header">
+    <div class="menu">
+      <label for="pic-switcher" class="title">显示键位图：</label>
+      <input type="checkbox" id="pic-switcher">
+    </div>
+    <div class="menu">
+      <label for="dark-mode-switcher" class="title">夜间模式：</label>
+      <input type="checkbox" id="dark-mode-switcher">
+    </div>
+    <div class="menu">
+      <label for="auto-next-switcher" class="title">正确时自动切换：</label>
+      <input type="checkbox" id="auto-next-switcher">
+    </div>
+    <div class="menu">
+      <label for="auto-clear-switcher" class="title">错误时自动清空：</label>
+      <input type="checkbox" id="auto-clear-switcher">
+    </div>
+    <div class="menu">
+      <label for="show-keys" class="title">显示按键提示：</label>
+      <input type="checkbox" id="show-keys">
+    </div>
+    <div class="menu">
+      <label for="show-pressed-key" class="title">显示实时按键：</label>
+      <input type="checkbox" id="show-pressed-key">
+    </div>
+  </div>
+  <div class="workspace">
+    <div class="col">
+      <span class="dict" id="dict"></span>
+    </div>
+    <div class="col">
+      <div class="row">
+        <span class="q" id="q"></span>
+      </div>
+      <div class="row">
+        <input id="a" maxlength="2" autofocus="autofocus" autocomplete="off">
+        <div class="btn" id="btn"></div>
+      </div>
+    </div>
+  </div>
+  <div class="keyboard" id="keyboard">
+    <div class="keys" id="keys">
+      <div class="row-1">
+        <div id="row-1-col-1" class="key"></div>
+        <div id="row-1-col-2" class="key"></div>
+        <div id="row-1-col-3" class="key"></div>
+        <div id="row-1-col-4" class="key"></div>
+        <div id="row-1-col-5" class="key"></div>
+        <div id="row-1-col-6" class="key"></div>
+        <div id="row-1-col-7" class="key"></div>
+        <div id="row-1-col-8" class="key"></div>
+        <div id="row-1-col-9" class="key"></div>
+        <div id="row-1-col-10" class="key"></div>
+      </div>
+      <div class="row-2">
+        <div id="row-2-col-1" class="key default"></div>
+        <div id="row-2-col-2" class="key default"></div>
+        <div id="row-2-col-3" class="key default"></div>
+        <div id="row-2-col-4" class="key default underline"></div>
+        <div id="row-2-col-5" class="key"></div>
+        <div id="row-2-col-6" class="key"></div>
+        <div id="row-2-col-7" class="key default underline"></div>
+        <div id="row-2-col-8" class="key default"></div>
+        <div id="row-2-col-9" class="key default"></div>
+        <div id="row-2-col-10" class="key default"></div>
+      </div>
+      <div class="row-3">
+        <div id="row-3-col-1" class="key"></div>
+        <div id="row-3-col-2" class="key"></div>
+        <div id="row-3-col-3" class="key"></div>
+        <div id="row-3-col-4" class="key"></div>
+        <div id="row-3-col-5" class="key"></div>
+        <div id="row-3-col-6" class="key"></div>
+        <div id="row-3-col-7" class="key"></div>
+        <div id="row-3-col-8" class="key"></div>
+        <div id="row-3-col-9" class="key"></div>
+        <div id="row-3-col-10" class="key"></div>
+      </div>
+    </div>
+    <div class="other-container" id="other-container"></div>
+    <div class="tips" id="tips"></div>
+  </div>
+  <div class="footer">
+    <div class="copyright">
+        <span>基于 @ BlueSky | v5.18 2022.3.6 更新</span>
+        <a title="" href="https://github.com/BlueSky-07/Shuang"
+          target="_blank">https://github.com/BlueSky-07/Shuang</a>
+        <br>
+        <br>
+        <span>增加了对多键盘格式的支持。</span>
+        <br>
+        <br>
+        <img src="https://img.shields.io/badge/author-%40er1c--zh-yellowgreen?style=flat-square"/>
+        <object data="https://img.shields.io/badge/repo-er1c--zh%2FShuang-lightgrey?logo=github&style=flat-square&link=https://github.com/er1c-zh/Shuang"></object>
+        <object data="https://img.shields.io/badge/blog-lightgrey?style=flat-square&link=https://blog.er1c.dev"></object>
+    </div>
+  </div>
+  <script src="build/app.min.js"></script>
+</body>
+
+</html>
