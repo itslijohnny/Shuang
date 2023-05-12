@@ -176,25 +176,9 @@ Shuang.app.action = {
   },
   next(noFocus) {
     this.redo(noFocus)
-    // switch (Shuang.app.setting.config.mode) {
-    //   case 'all-random':
-    //     Shuang.core.current = Shuang.core.model.getRandom()
-    //     break
-    //   case 'all-order':
-    //     Shuang.core.current = Shuang.core.model.getByOrder()
-    //     break
-    //   case 'hard-random':
-    //     Shuang.core.current = Shuang.core.model.getHardRandom()
-    //     break
-    //   case 'hard-random-without-pinyin':
-    //     do {
-    //       Shuang.core.current = Shuang.core.model.getHardRandom()
-    //     } while (Array.isArray(Shuang.core.current.dict))
-    //     break
-    // }
     Shuang.core.current = Shuang.core.model.getNextChar()
     if (Shuang.core.history.includes(Shuang.core.current.sheng + Shuang.core.current.yun)) this.next()
-    else Shuang.core.history = [...Shuang.core.history, Shuang.core.current.sheng + Shuang.core.current.yun].slice(-100)
+    else Shuang.core.history = [...Shuang.core.history, Shuang.core.current.sheng + Shuang.core.current.yun].slice(-10)
     $('#q').innerText = Shuang.core.current.view.sheng + Shuang.core.current.view.yun
     $('#dict').innerText = Shuang.core.current.dict
 
