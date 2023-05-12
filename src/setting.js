@@ -6,7 +6,7 @@ Shuang.app.setting = {
     /** Reading Storage or Using Default **/
     this.config = {
       scheme: readStorage('scheme') || 'ziranma',
-      mode: readStorage('mode') || 'all-random',
+      mode: readStorage('mode') || 'lv4',
       showPic: readStorage('showPic') || 'true',
       darkMode: readStorage('darkMode') || 'true',
       autoNext: readStorage('autoNext') || 'true',
@@ -16,7 +16,7 @@ Shuang.app.setting = {
       keyboardLayout: readStorage("keyboardLayout") || 'qwerty',
     }
     /** Applying Settings :: Changing UI **/
-    const { scheme, mode, showPic, darkMode, autoNext, autoClear, showKeys, showPressedKey, disableMobileKeyboard, keyboardLayout } = this.config
+    const { scheme, mode, showPic, darkMode, autoNext, autoClear, showKeys, showPressedKey, keyboardLayout } = this.config
     Array.prototype.find.call($('#scheme-select').children,
       schemeOption => Shuang.resource.schemeList[scheme].startsWith(schemeOption.innerText)
     ).selected = true
@@ -125,11 +125,6 @@ Shuang.app.setting = {
       if (name === modeName) {
         this.config.mode = mode
         $('#mode-desc').innerText = Shuang.app.modeList[mode].desc
-        if (mode === 'hard-random-without-pinyin') {
-          $('#q').style.display = 'none'
-        } else {
-          $('#q').style.display = 'block'
-        }
         break
       }
     }

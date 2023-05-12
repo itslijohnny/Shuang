@@ -44,6 +44,13 @@ Shuang.core.model = class Model {
     this.beforeJudge()
     return this.scheme.has(sheng.toLowerCase() + yun.toLowerCase())
   }
+
+  static getNextChar() {
+    const mode = Shuang.app.setting.config.mode
+    const poolKey = Shuang.app.modeList[mode].poolKey
+    const cur = Shuang.resource.pool[poolKey][Math.floor(Math.random() * Shuang.resource.pool[poolKey].length)]
+    return new Model(cur.sheng, cur.yun)
+  }
   
   static getRandom() {
     const sheng = Shuang.resource.dict.list[Math.floor(Math.random() * Shuang.resource.dict.list.length)]

@@ -1,16 +1,34 @@
 /** last changed: 2018.11.10 */
 
 Shuang.app.modeList = {
-  'all-random': {
-    name: '全部随机', desc: '全部拼音组合'
+  'lv1.1': {
+    "name": 'a/ai/an/ang/ao', desc: '无ch/sh/zh', poolKey: 11
   },
-  'all-order': {
-    name: '全部顺序', desc: '全部拼音组合'
+  'lv1.2': {
+    "name": 'e/ei/en/eng', desc: '无ch/sh/zh', poolKey: 12
   },
-  'hard-random': {
-    name: '困难随机', desc: '韵母需转换'
+  'lv1.3': {
+    "name": 'ia/ian/iang/iao', desc: '无ch/sh/zh', poolKey: 13
   },
-  'hard-random-without-pinyin': {
-    name: '无拼音', desc: '无拼音提示'
-  }
+  'lv1.4': {
+    "name": 'i/ie/iong/in/ing/iu', desc: '无ch/sh/zh', poolKey: 14
+  },
+  'lv1.5': {
+    "name": 'o/ong/ou/v/ve', desc: '无ch/sh/zh', poolKey: 15
+  },
+  'lv1.6': {
+    "name": 'uan/uai/uan/uang', desc: '无ch/sh/zh', poolKey: 16
+  },
+  'lv1.7': {
+    "name": 'u/ui/un/uo', desc: '无ch/sh/zh', poolKey: 17
+  },
+  'lv2': {
+    "name": 'ch/sh/zh', desc: 'ch/sh/zh', poolKey: 2
+  },
+  'lv3': {
+    "name": '无韵', desc: 'en/ao/etc', poolKey: 3
+  },
+  'lv4': {
+    "name": 'all', desc: 'all', poolKey: 4
+  },
 }

@@ -253,15 +253,19 @@ Shuang.resource.pool_rule = [
 ]
 Shuang.resource.pool = {}
 Object.entries(Shuang.resource.dict).forEach(([sheng, yunList]) => {
-    Object.entries(yunList).forEach(([yun, char]) => {
-        Shuang.resource.pool_rule.forEach(rule => {
-            if (rule.sheng != "all" && rule.sheng.indexOf(sheng) == -1) return
-            if (rule.yun != "all" && rule.yun.indexOf(yun) == -1) return
-            if (Shuang.resource.pool[rule.level] == undefined) Shuang.resource.pool[rule.level] = []
-            Shuang.resource.pool[rule.level].push({
-                'char': char,
-                'sheng': sheng,
-                'yun': yun,
+    Object.entries(yunList).forEach(([yun, charList]) => {
+        // convert charList to array if it's not array
+        if (!Array.isArray(charList)) charList = [charList]
+        charList.forEach(char => {
+            Shuang.resource.pool_rule.forEach(rule => {
+                if (rule.sheng != "all" && rule.sheng.indexOf(sheng) == -1) return
+                if (rule.yun != "all" && rule.yun.indexOf(yun) == -1) return
+                if (Shuang.resource.pool[rule.level] == undefined) Shuang.resource.pool[rule.level] = []
+                Shuang.resource.pool[rule.level].push({
+                    'char': char,
+                    'sheng': sheng,
+                    'yun': yun,
+                })
             })
         })
     })
@@ -300,18 +304,36 @@ Shuang.resource.schemeList = {
 /** last changed: 2018.11.10 */
 
 Shuang.app.modeList = {
-  'all-random': {
-    name: '全部随机', desc: '全部拼音组合'
+  'lv1.1': {
+    "name": 'a/ai/an/ang/ao', desc: '无ch/sh/zh', poolKey: 11
   },
-  'all-order': {
-    name: '全部顺序', desc: '全部拼音组合'
+  'lv1.2': {
+    "name": 'e/ei/en/eng', desc: '无ch/sh/zh', poolKey: 12
   },
-  'hard-random': {
-    name: '困难随机', desc: '韵母需转换'
+  'lv1.3': {
+    "name": 'ia/ian/iang/iao', desc: '无ch/sh/zh', poolKey: 13
   },
-  'hard-random-without-pinyin': {
-    name: '无拼音', desc: '无拼音提示'
-  }
+  'lv1.4': {
+    "name": 'i/ie/iong/in/ing/iu', desc: '无ch/sh/zh', poolKey: 14
+  },
+  'lv1.5': {
+    "name": 'o/ong/ou/v/ve', desc: '无ch/sh/zh', poolKey: 15
+  },
+  'lv1.6': {
+    "name": 'uan/uai/uan/uang', desc: '无ch/sh/zh', poolKey: 16
+  },
+  'lv1.7': {
+    "name": 'u/ui/un/uo', desc: '无ch/sh/zh', poolKey: 17
+  },
+  'lv2': {
+    "name": 'ch/sh/zh', desc: 'ch/sh/zh', poolKey: 2
+  },
+  'lv3': {
+    "name": '无韵', desc: 'en/ao/etc', poolKey: 3
+  },
+  'lv4': {
+    "name": 'all', desc: 'all', poolKey: 4
+  },
 }
 /******************** EOF mode-list.js ************************/
 /************************ keyboard-layout-list.js ************************/
@@ -367,6 +389,13 @@ Shuang.core.model = class Model {
     this.beforeJudge()
     return this.scheme.has(sheng.toLowerCase() + yun.toLowerCase())
   }
+
+  static getNextChar() {
+    const mode = Shuang.app.setting.config.mode
+    const poolKey = Shuang.app.modeList[mode].poolKey
+    const cur = Shuang.resource.pool[poolKey][Math.floor(Math.random() * Shuang.resource.pool[poolKey].length)]
+    return new Model(cur.sheng, cur.yun)
+  }
   
   static getRandom() {
     const sheng = Shuang.resource.dict.list[Math.floor(Math.random() * Shuang.resource.dict.list.length)]
@@ -416,7 +445,7 @@ Shuang.app.setting = {
     /** Reading Storage or Using Default **/
     this.config = {
       scheme: readStorage('scheme') || 'ziranma',
-      mode: readStorage('mode') || 'all-random',
+      mode: readStorage('mode') || 'lv4',
       showPic: readStorage('showPic') || 'true',
       darkMode: readStorage('darkMode') || 'true',
       autoNext: readStorage('autoNext') || 'true',
@@ -426,7 +455,7 @@ Shuang.app.setting = {
       keyboardLayout: readStorage("keyboardLayout") || 'qwerty',
     }
     /** Applying Settings :: Changing UI **/
-    const { scheme, mode, showPic, darkMode, autoNext, autoClear, showKeys, showPressedKey, disableMobileKeyboard, keyboardLayout } = this.config
+    const { scheme, mode, showPic, darkMode, autoNext, autoClear, showKeys, showPressedKey, keyboardLayout } = this.config
     Array.prototype.find.call($('#scheme-select').children,
       schemeOption => Shuang.resource.schemeList[scheme].startsWith(schemeOption.innerText)
     ).selected = true
@@ -535,11 +564,6 @@ Shuang.app.setting = {
       if (name === modeName) {
         this.config.mode = mode
         $('#mode-desc').innerText = Shuang.app.modeList[mode].desc
-        if (mode === 'hard-random-without-pinyin') {
-          $('#q').style.display = 'none'
-        } else {
-          $('#q').style.display = 'block'
-        }
         break
       }
     }
@@ -849,22 +873,23 @@ Shuang.app.action = {
   },
   next(noFocus) {
     this.redo(noFocus)
-    switch (Shuang.app.setting.config.mode) {
-      case 'all-random':
-        Shuang.core.current = Shuang.core.model.getRandom()
-        break
-      case 'all-order':
-        Shuang.core.current = Shuang.core.model.getByOrder()
-        break
-      case 'hard-random':
-        Shuang.core.current = Shuang.core.model.getHardRandom()
-        break
-      case 'hard-random-without-pinyin':
-        do {
-          Shuang.core.current = Shuang.core.model.getHardRandom()
-        } while (Array.isArray(Shuang.core.current.dict))
-        break
-    }
+    // switch (Shuang.app.setting.config.mode) {
+    //   case 'all-random':
+    //     Shuang.core.current = Shuang.core.model.getRandom()
+    //     break
+    //   case 'all-order':
+    //     Shuang.core.current = Shuang.core.model.getByOrder()
+    //     break
+    //   case 'hard-random':
+    //     Shuang.core.current = Shuang.core.model.getHardRandom()
+    //     break
+    //   case 'hard-random-without-pinyin':
+    //     do {
+    //       Shuang.core.current = Shuang.core.model.getHardRandom()
+    //     } while (Array.isArray(Shuang.core.current.dict))
+    //     break
+    // }
+    Shuang.core.current = Shuang.core.model.getNextChar()
     if (Shuang.core.history.includes(Shuang.core.current.sheng + Shuang.core.current.yun)) this.next()
     else Shuang.core.history = [...Shuang.core.history, Shuang.core.current.sheng + Shuang.core.current.yun].slice(-100)
     $('#q').innerText = Shuang.core.current.view.sheng + Shuang.core.current.view.yun

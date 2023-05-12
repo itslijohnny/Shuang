@@ -205,15 +205,19 @@ Shuang.resource.pool_rule = [
 ]
 Shuang.resource.pool = {}
 Object.entries(Shuang.resource.dict).forEach(([sheng, yunList]) => {
-    Object.entries(yunList).forEach(([yun, char]) => {
-        Shuang.resource.pool_rule.forEach(rule => {
-            if (rule.sheng != "all" && rule.sheng.indexOf(sheng) == -1) return
-            if (rule.yun != "all" && rule.yun.indexOf(yun) == -1) return
-            if (Shuang.resource.pool[rule.level] == undefined) Shuang.resource.pool[rule.level] = []
-            Shuang.resource.pool[rule.level].push({
-                'char': char,
-                'sheng': sheng,
-                'yun': yun,
+    Object.entries(yunList).forEach(([yun, charList]) => {
+        // convert charList to array if it's not array
+        if (!Array.isArray(charList)) charList = [charList]
+        charList.forEach(char => {
+            Shuang.resource.pool_rule.forEach(rule => {
+                if (rule.sheng != "all" && rule.sheng.indexOf(sheng) == -1) return
+                if (rule.yun != "all" && rule.yun.indexOf(yun) == -1) return
+                if (Shuang.resource.pool[rule.level] == undefined) Shuang.resource.pool[rule.level] = []
+                Shuang.resource.pool[rule.level].push({
+                    'char': char,
+                    'sheng': sheng,
+                    'yun': yun,
+                })
             })
         })
     })
