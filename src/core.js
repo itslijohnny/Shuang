@@ -1,19 +1,23 @@
 /** last changed: 2019.8.23 */
 
 Shuang.core.model = class Model {
-  constructor(sheng = '', yun = '') {
-    this.sheng = sheng.toLowerCase()
-    this.yun = yun.toLowerCase()
-    this.dict = Shuang.resource.dict[this.sheng][this.yun]
-    this.scheme = new Set()
-    this.keyboardLayout = new Set()
+  constructor(question, answer) {
+    this.question = question
+    this.answer = answer
+
     this.view = {
-      sheng: this.sheng.toUpperCase().slice(0, 1) + this.sheng.slice(1),
-      yun: this.yun
+      question: '',
+      answer: ''
     }
+  }
+
+  // getHint: return key
+  getHint(val) {
+    return this.answer
   }
   
   beforeJudge() {
+    return
     this.scheme.clear()
     const schemeName = Shuang.app.setting.config.scheme
     const schemeDetail = Shuang.resource.scheme[schemeName].detail
@@ -40,49 +44,38 @@ Shuang.core.model = class Model {
     }
   }
   
-  judge(sheng = '', yun = '') {
-    this.beforeJudge()
-    return this.scheme.has(sheng.toLowerCase() + yun.toLowerCase())
-  }
+  // return 1 if val is right but not complete yet
+  // return 2 if val is right and complete
+  // return 0 if val is wrong
+  judge(val) {
+    // compare val with this.answer
+    // when val == this.answer return 2
+    // when this.answer and val has same prefix, return 1
+    // else return 0
+    if (val === this.answer) {
+      return 2
+    } else if (val.startsWith(this.answer)) {
+      return 1
+    } else {
+        return 0
+    }
+}
 
   static getNextChar() {
     const mode = Shuang.app.setting.config.mode
     const poolKey = Shuang.app.modeList[mode].poolKey
-    const cur = Shuang.resource.pool[poolKey][Math.floor(Math.random() * Shuang.resource.pool[poolKey].length)]
-    return new Model(cur.sheng, cur.yun)
-  }
-  
-  static getRandom() {
-    const sheng = Shuang.resource.dict.list[Math.floor(Math.random() * Shuang.resource.dict.list.length)]
-    const yun = Shuang.resource.dict[sheng].list[Math.floor(Math.random() * Shuang.resource.dict[sheng].list.length)]
-    const instance = new Model(sheng, yun)
-    return Model.isSame(instance, Shuang.core.current) ? Model.getRandom() : instance
-  }
-  
-  static getHardRandom() {
-    let instance = undefined
-    do {
-      instance = Model.getRandom()
-    } while (instance.sheng === '' || instance.yun.length === 1)
-    return instance
-  }
-  
-  static getByOrder() {
-    while (true) {
-      const sheng = Shuang.resource.dict.list[Shuang.core.order.shengIndex]
-      if (sheng !== undefined) {
-        const yun = Shuang.resource.dict[sheng].list[Shuang.core.order.yunIndex]
-        if (yun) {
-          Shuang.core.order.yunIndex++
-          return new Model(sheng, yun)
-        }
-      }
-      if (Shuang.core.order.yunIndex === 0) {
-        Shuang.core.order.shengIndex = 0
-      } else {
-        Shuang.core.order.shengIndex++
-        Shuang.core.order.yunIndex = 0
-      }
+    const pool = Shuang.resource.pool[poolKey]
+    const cur = Shuang.resource.pool[poolKey].data[Math.floor(Math.random() * Shuang.resource.pool[poolKey].data.length)]
+    const schemeName = Shuang.app.setting.config.scheme
+    switch (pool.type) {
+        case 'yun':
+            return new Model(cur, Shuang.resource.scheme[schemeName].detail.yun[cur])
+        case 'sheng':
+            return new Model(cur, Shuang.resource.scheme[schemeName].detail.sheng[cur])
+        case '无韵':
+            return new Model(cur, Shuang.resource.scheme[schemeName].detail.other[cur])
+        default:
+            break;
     }
   }
   

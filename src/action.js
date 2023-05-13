@@ -48,13 +48,12 @@ Shuang.app.action = {
       this.next()
     })
 
-    /** Setting First Question **/
-    Shuang.core.current = new Shuang.core.model('sh', 'uang')
-    $('#q').innerText = Shuang.core.current.view.sheng + Shuang.core.current.view.yun
-    $('#dict').innerText = Shuang.core.current.dict
-
     /** Reset Configs **/
     Shuang.app.setting.reload()
+
+    /** Setting First Question **/
+    Shuang.core.current = Shuang.core.model.getNextChar()
+    $('#dict').innerText = Shuang.core.current.question
 
     /** Listen Events **/
     document.addEventListener('keydown', e => {
@@ -125,32 +124,23 @@ Shuang.app.action = {
         if (e.simulated) {
           $('#a').value += e.key.toLowerCase()
         }
-        $('#a').value = $('#a').value
-          .slice(0, 2)
-          .replace(/[^a-zA-Z;]/g, '')
-          .split('')
-          .map((c, i) => i === 0 ? c.toUpperCase() : c.toLowerCase())
-          .join('')
         Shuang.app.setting.updatePressedKeyHint(e.key)
-        const canAuto = $('#a').value.length === 2
-        const isRight = this.judge()
-        if (canAuto) {
-          if (isRight) {
-            this.next(e.simulated)
-          } else {
-            this.redo(e.simulated)
-          }
+        switch (this.judge()) {
+            case 0:
+                this.redo(e.simulated)
+                break;
+            case 1:
+                break;
+            case 2:
+                this.next(e.simulated)
+                break;
+            default:
+                break;
         }
     }
   },
   judge() {
-    const input = $('#a')
-    const [sheng, yun] = input.value
-    if (yun && Shuang.core.current.judge(sheng, yun)) {
-      return true
-    } else {
-      return false
-    }
+    return Shuang.core.current.judge($('#a').value)
   },
   redo(noFocus) {
     $('#a').value = ''
@@ -159,13 +149,11 @@ Shuang.app.action = {
   next(noFocus) {
     this.redo(noFocus)
     Shuang.core.current = Shuang.core.model.getNextChar()
-    if (Shuang.core.history.includes(Shuang.core.current.sheng + Shuang.core.current.yun)) this.next()
-    else Shuang.core.history = [...Shuang.core.history, Shuang.core.current.sheng + Shuang.core.current.yun].slice(-10)
-    $('#q').innerText = Shuang.core.current.view.sheng + Shuang.core.current.view.yun
-    $('#dict').innerText = Shuang.core.current.dict
+    if (Shuang.core.history.includes(Shuang.core.current.question)) this.next()
+    else Shuang.core.history = [...Shuang.core.history, Shuang.core.current.question].slice(-1)
+    $('#dict').innerText = Shuang.core.current.question
 
     // Update Keys Hint
-    Shuang.core.current.beforeJudge()
     Shuang.app.setting.updateKeysHint()
   }
 }

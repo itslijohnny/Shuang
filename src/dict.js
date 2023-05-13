@@ -180,47 +180,55 @@ Shuang.resource.dict = {
 }
 Object.entries(Shuang.resource.dict).forEach(([sheng, yunList]) => Shuang.resource.dict[sheng].list = Object.keys(yunList))
 Shuang.resource.dict.list = Object.keys(Shuang.resource.dict)
-// TODO 
-Shuang.resource.pool = {}
+Shuang.resource.pool = {
+    11: { type: 'yun', data: ['a', 'ai', 'an', 'ang', 'ao']},
+    12: { type: 'yun', data: ["e", "ei", "en", "eng"]},
+    13: { type: 'yun', data: ["ia", "ian", "iang", "iao"]},
+    14: { type: 'yun', data: ["i", "ie", "iong", "in", "ing", "iu"]},
+    15: { type: 'yun', data: ["o", "ong", "ou", "v", "ve"]},
+    16: { type: 'yun', data: ["uan", "uai", "uan", "uang"]},
+    17: { type: 'yun', data: ["u", "ui", "un", "uo"]},
+    21: { type: 'sheng', data: ["ch", "sh", "zh"]},
+    31: { type: '无韵', data: ["a", "ai", "an", "ang", "ao", "e", "ei", "en", "eng", "er", "o", "ou"] },
+    41: { type: 'yun', data: ['a', 'ai', 'an', 'ang', 'ao', 'e', 'ei', 'en', 'eng', 'i', 'ia', 'ian', 'iang', 'iao', 'ie', 'iong', 'in', 'ing', 'iu', 'o', 'ong', 'ou', 'u', 'ua', 'uai', 'uan', 'uang', 'ue', 'ui', 'un', 'uo', 'v', 've'] }
+}
 // lv1 without ch sh zh
 // lv1.1 a ai an ang ao
-Shuang.resource.pool_rule = [
-    { "level": 11, "sheng": ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "w", "x", "z"], 
-        "yun": ["a", "ai", "an", "ang", "ao"] },
-    { "level": 12, "sheng": ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "w", "x", "z"], 
-        "yun": ["e", "ei", "en", "eng"] },
-    { "level": 13, "sheng": ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "w", "x", "z"], 
-        "yun": ["ia", "ian", "iang", "iao"] },
-    { "level": 14, "sheng": ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "w", "x", "z"], 
-        "yun": ["i", "ie", "iong", "in", "ing", "iu"] },
-    { "level": 15, "sheng": ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "w", "x", "z"], 
-        "yun": ["o", "ong", "ou", "v", "ve"] },
-    { "level": 16, "sheng": ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "w", "x", "z"], 
-        "yun": ["uan", "uai", "uan", "uang" ] },
-    { "level": 17, "sheng": ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "w", "x", "z"], 
-        "yun": ["u", "ui", "un", "uo"] },
-    { "level": 2, "sheng": ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "w", "x", "z", "ch", "sh", "zh"], "yun": "all" },
-    { "level": 3, "sheng": [""], "yun": "all" },
-    { "level": 4, "sheng": "all", "yun": "all" }
-]
-Shuang.resource.pool = {}
-Object.entries(Shuang.resource.dict).forEach(([sheng, yunList]) => {
-    Object.entries(yunList).forEach(([yun, charList]) => {
-        // convert charList to array if it's not array
-        if (!Array.isArray(charList)) charList = [charList]
-        charList.forEach(char => {
-            Shuang.resource.pool_rule.forEach(rule => {
-                if (rule.sheng != "all" && rule.sheng.indexOf(sheng) == -1) return
-                if (rule.yun != "all" && rule.yun.indexOf(yun) == -1) return
-                if (Shuang.resource.pool[rule.level] == undefined) Shuang.resource.pool[rule.level] = []
-                Shuang.resource.pool[rule.level].push({
-                    'char': char,
-                    'sheng': sheng,
-                    'yun': yun,
-                })
-            })
-        })
-    })
-})
-
-console.log(Shuang.resource.pool)
+// Shuang.resource.pool_rule = [
+//     { "level": 11, "sheng": ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "w", "x", "z"], 
+//         "yun": ["a", "ai", "an", "ang", "ao"] },
+//     { "level": 12, "sheng": ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "w", "x", "z"], 
+//         "yun": ["e", "ei", "en", "eng"] },
+//     { "level": 13, "sheng": ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "w", "x", "z"], 
+//         "yun": ["ia", "ian", "iang", "iao"] },
+//     { "level": 14, "sheng": ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "w", "x", "z"], 
+//         "yun": ["i", "ie", "iong", "in", "ing", "iu"] },
+//     { "level": 15, "sheng": ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "w", "x", "z"], 
+//         "yun": ["o", "ong", "ou", "v", "ve"] },
+//     { "level": 16, "sheng": ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "w", "x", "z"], 
+//         "yun": ["o", "ong", "ou", "v", "ve"] },
+//     { "level": 17, "sheng": ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "w", "x", "z"], 
+//         "yun": ["u", "ui", "un", "uo"] },
+//     { "level": 2, "sheng": ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "w", "x", "z", "ch", "sh", "zh"], "yun": "all" },
+//     { "level": 3, "sheng": [""], "yun": "all" },
+//     { "level": 4, "sheng": "all", "yun": "all" }
+// ]
+// Shuang.resource.pool = {}
+// Object.entries(Shuang.resource.dict).forEach(([sheng, yunList]) => {
+//     Object.entries(yunList).forEach(([yun, charList]) => {
+//         // convert charList to array if it's not array
+//         if (!Array.isArray(charList)) charList = [charList]
+//         charList.forEach(char => {
+//             Shuang.resource.pool_rule.forEach(rule => {
+//                 if (rule.sheng != "all" && rule.sheng.indexOf(sheng) == -1) return
+//                 if (rule.yun != "all" && rule.yun.indexOf(yun) == -1) return
+//                 if (Shuang.resource.pool[rule.level] == undefined) Shuang.resource.pool[rule.level] = []
+//                 Shuang.resource.pool[rule.level].push({
+//                     'char': char,
+//                     'sheng': sheng,
+//                     'yun': yun,
+//                 })
+//             })
+//         })
+//     })
+// })

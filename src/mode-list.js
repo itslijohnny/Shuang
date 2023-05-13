@@ -23,12 +23,12 @@ Shuang.app.modeList = {
     "name": 'u/ui/un/uo', desc: '无ch/sh/zh', poolKey: 17
   },
   'lv2': {
-    "name": 'ch/sh/zh', desc: 'ch/sh/zh', poolKey: 2
+    "name": 'ch/sh/zh', desc: 'ch/sh/zh', poolKey: 21
   },
   'lv3': {
-    "name": '无韵', desc: 'en/ao/etc', poolKey: 3
+    "name": '无韵', desc: 'en/ao/etc', poolKey: 31
   },
   'lv4': {
-    "name": 'all', desc: 'all', poolKey: 4
+    "name": '全部韵母', desc: 'all', poolKey: 41
   },
 }

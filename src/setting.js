@@ -40,25 +40,20 @@ Shuang.app.setting = {
       Object.values(Shuang.resource.schemeList)
         .findIndex(scheme => scheme.startsWith(schemeName))
     ]
-    importJS('scheme/' + this.config.scheme, () => {
-      if (next) Shuang.app.action.next()
-      Shuang.core.current.beforeJudge()
-      this.updateKeysHint()
-      this.updateTips()
-      this.updateKeyboardLayout()
-    })
     writeStorage('scheme', this.config.scheme)
+    if (next) Shuang.app.action.next()
+    this.updateKeysHint()
+    this.updateTips()
+    this.updateKeyboardLayout()
   },
   setKeyboardLayout(layoutName) {
     this.config.keyboardLayout = Object.keys(Shuang.resource.keyboardLayoutList)[
         Object.values(Shuang.resource.keyboardLayoutList)
             .findIndex(layout => layout.startsWith(layoutName))
     ]
-    importJS('keyboard-layout/' + this.config.keyboardLayout, () => {
-      this.updateKeysHint()
-      this.updateKeyboardLayout()
-    })
     writeStorage('keyboardLayout', this.config.keyboardLayout)
+    this.updateKeysHint()
+    this.updateKeyboardLayout()
   },
   updateKeyboardLayout() {
     const currentKeyboardLayout = Shuang.resource.keyboardLayout[this.config.keyboardLayout]
@@ -172,9 +167,13 @@ Shuang.app.setting = {
         return
     }
     const keyList = currentKeyboardLayout.layout.join('')
-    for (const [sheng, yun] of Shuang.core.current.scheme) {
-      keys[keyList.indexOf(sheng)].classList.add('answer')
-      keys[keyList.indexOf(yun)].classList.add('answer')
+
+    if (!Shuang.core.current) {
+        return
+    }
+
+    for (const k of Shuang.core.current.getHint()) {
+      keys[keyList.indexOf(k)].classList.add('answer')
     }
     this.updateKeysHintLayoutRatio()
   },
