@@ -27,7 +27,8 @@ jobs:
         cat .gitignore| sed 's/index.html//g' | sed 's/build//g' > .gitignore
         npm install
         npm run build
-        - run: git add .
+
+    - run: git add .
         
     - name: Commit files
       run: |
