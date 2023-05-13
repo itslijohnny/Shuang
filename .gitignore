@@ -10,3 +10,6 @@ package-lock.json
 # Release
 dist
 .vscode
+index.html
+src/app.bundle.js
+build
