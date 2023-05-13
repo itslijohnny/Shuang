@@ -2,7 +2,7 @@ name: NodeJS with Webpack
 
 on:
   push:
-    branches: [ "auto_release" ]
+    branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
@@ -27,3 +27,17 @@ jobs:
         cat .gitignore| sed 's/index.html//g' | sed 's/build//g' > .gitignore
         npm install
         npm run build
+        - run: git add .
+        
+    - name: Commit files
+      run: |
+        git config --local user.email "auto_pub@github.com"
+        git config --local user.name "auto_pub"
+        git commit -m "auto_pub" -a
+        
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: auto_release
+        force: true
