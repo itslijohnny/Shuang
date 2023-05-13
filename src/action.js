@@ -80,24 +80,8 @@ Shuang.app.action = {
     $('#show-pressed-key').addEventListener('change', e => {
       Shuang.app.setting.setShowPressedKey(e.target.checked)
     })
-    $('#dict').addEventListener('click', () => {
-      Shuang.core.current.beforeJudge()
-      $('#a').value = Shuang.core.current.scheme.values().next().value
-      this.judge()
-    })
     window.addEventListener('resize', Shuang.app.setting.updateKeysHintLayoutRatio)
     window.resizeTo(window.outerWidth, window.outerHeight)
-
-    /** Simulate Keyboard */
-    const keys = $$('.key')
-    const qwerty = 'qwertyuiopasdfghjkl;zxcvbnm'
-    for (let i = 0; i < keys.length; i++) {
-      keys[i].addEventListener('click', () => {
-        const event = new KeyboardEvent('keyup', { key: qwerty[i].toUpperCase()})
-        event.simulated = true
-        document.dispatchEvent(event)
-      })
-    }
 
     /** All Done **/
     this.redo()
@@ -106,11 +90,6 @@ Shuang.app.action = {
     switch (e.key) {
       case 'Backspace':
         this.redo()
-        break
-      case 'Tab':
-        Shuang.core.current.beforeJudge()
-        $('#a').value = Shuang.core.current.scheme.values().next().value
-        this.judge()
         break
       case 'Enter':
       case ' ':
@@ -121,18 +100,23 @@ Shuang.app.action = {
         }
         break
       default:
-        if (e.simulated) {
-          $('#a').value += e.key.toLowerCase()
-        }
         Shuang.app.setting.updatePressedKeyHint(e.key)
         switch (this.judge()) {
             case 0:
-                this.redo(e.simulated)
+                $('#workspace').classList.add('wrong')
+                setTimeout(() => {
+                    $('#workspace').classList.remove('wrong')
+                }, 250)
+                this.redo()
                 break;
             case 1:
                 break;
             case 2:
-                this.next(e.simulated)
+                $('#workspace').classList.add('right')
+                setTimeout(() => {
+                    $('#workspace').classList.remove('right')
+                }, 250)
+                this.next()
                 break;
             default:
                 break;
@@ -142,12 +126,11 @@ Shuang.app.action = {
   judge() {
     return Shuang.core.current.judge($('#a').value)
   },
-  redo(noFocus) {
+  redo() {
     $('#a').value = ''
-    if (!noFocus) $('#a').focus()
   },
-  next(noFocus) {
-    this.redo(noFocus)
+  next() {
+    this.redo()
     Shuang.core.current = Shuang.core.model.getNextChar()
     if (Shuang.core.history.includes(Shuang.core.current.question)) this.next()
     else Shuang.core.history = [...Shuang.core.history, Shuang.core.current.question].slice(-1)

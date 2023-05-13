@@ -52,7 +52,7 @@ body {
 /* workspace */
 .workspace {
   margin: auto;
-  width: 300px;
+  width: 450px;
   height: 150px;
   display: -webkit-flex;
   display: flex;
@@ -65,7 +65,9 @@ body {
 }
 
 .workspace .col {
+  width: 200px;
   margin: 10px;
+  text-align: center;
   display: inline-block;
 }
 
@@ -73,31 +75,23 @@ body {
   font-size: 96px;
 }
 
-.workspace .col .row {
-  height: 50px;
-}
-
-.workspace .col .row .q {
-  font-size: 36px;
-}
-
-.workspace .col .row .btn {
-  display: inline-block;
-  font-size: 32px;
-  visibility: hidden;
-}
-
 .workspace .col .row input {
-  width: 75px;
-  font-size: 36px;
+  font-size: 96px;
+  width: 100%;
   border: solid #eee;
-  border-bottom: dashed #000;
   background-color: #eee;
   -webkit-appearance: none;
   border-radius: 0;
   display: inline;
   text-transform: capitalize;
   padding: 0;
+}
+
+.workspace.right {
+    background-color: #77FF77;
+}
+.workspace.wrong {
+    background-color: #ff7777;
 }
 
 .workspace .col .row input:hover {
@@ -323,7 +317,6 @@ body {
 
 .dark-mode .workspace .col .row input {
   border: solid #333;
-  border-bottom: dashed #ccc;
 }
 
 .dark-mode .keyboard .pic {
@@ -340,4 +333,11 @@ body {
 
 .dark-mode .keyboard .keys .row-2 .default {
     border-color: cyan !important;
+}
+
+.dark-mode .workspace.right {
+    background-color: #335533 !important;
+}
+.dark-mode .workspace.wrong {
+    background-color: #ff7777 !important;
 }

@@ -16,34 +16,6 @@ Shuang.core.model = class Model {
     return this.answer
   }
   
-  beforeJudge() {
-    return
-    this.scheme.clear()
-    const schemeName = Shuang.app.setting.config.scheme
-    const schemeDetail = Shuang.resource.scheme[schemeName].detail
-    const pinyin = this.sheng + this.yun
-    if (schemeDetail.other[pinyin]) {
-      if (Array.isArray(schemeDetail.other[pinyin])) {
-        schemeDetail.other[pinyin].forEach(other => this.scheme.add(other))
-      } else {
-        this.scheme.add(schemeDetail.other[pinyin])
-      }
-    } else {
-      for (const s of schemeDetail.sheng[this.sheng]) {
-        for (const y of schemeDetail.yun[this.yun]) {
-          this.scheme.add(s + y)
-        }
-      }
-      if (this.yun === 'u' && 'jqxy'.includes(this.sheng)) {
-        for (const s of schemeDetail.sheng[this.sheng]) {
-          for (const y of schemeDetail.yun.v) {
-            this.scheme.add(s + y)
-          }
-        }
-      }
-    }
-  }
-  
   // return 1 if val is right but not complete yet
   // return 2 if val is right and complete
   // return 0 if val is wrong
