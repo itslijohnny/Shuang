@@ -2,11 +2,6 @@
 
 Shuang.app.action = {
   init() {
-    /** Update Resources **/
-    if (navigator && navigator.userAgent && /windows|linux/i.test(navigator.userAgent)) {
-      Shuang.resource.emoji = { right: '✔️', wrong: '❌' }
-    }
-
     /** Rendering **/
     function renderSelect(target, options, callback) {
       options.forEach(option => {
@@ -80,12 +75,6 @@ Shuang.app.action = {
     $('#dark-mode-switcher').addEventListener('change', e => {
       Shuang.app.setting.setDarkMode(e.target.checked)
     })
-    $('#auto-next-switcher').addEventListener('change', e => {
-      Shuang.app.setting.setAutoNext(e.target.checked)
-    })
-    $('#auto-clear-switcher').addEventListener('change', e => {
-      Shuang.app.setting.setAutoClear(e.target.checked)
-    })
     $('#show-keys').addEventListener('change', e => {
       Shuang.app.setting.setShowKeys(e.target.checked)
     })
@@ -146,9 +135,9 @@ Shuang.app.action = {
         const canAuto = $('#a').value.length === 2
         const isRight = this.judge()
         if (canAuto) {
-          if (isRight && Shuang.app.setting.config.autoNext === 'true') {
+          if (isRight) {
             this.next(e.simulated)
-          } else if (!isRight && Shuang.app.setting.config.autoClear === 'true') {
+          } else {
             this.redo(e.simulated)
           }
         }
@@ -156,23 +145,16 @@ Shuang.app.action = {
   },
   judge() {
     const input = $('#a')
-    const btn = $('#btn')
     const [sheng, yun] = input.value
     if (yun && Shuang.core.current.judge(sheng, yun)) {
-      btn.onclick = () => this.next(true)
-      btn.innerText = Shuang.resource.emoji.right
       return true
     } else {
-      btn.onclick = () => this.redo(true)
-      btn.innerText = Shuang.resource.emoji.wrong
       return false
     }
   },
   redo(noFocus) {
     $('#a').value = ''
     if (!noFocus) $('#a').focus()
-    $('#btn').onclick = () => this.redo(noFocus)
-    $('#btn').innerText = Shuang.resource.emoji.wrong
   },
   next(noFocus) {
     this.redo(noFocus)
@@ -185,11 +167,5 @@ Shuang.app.action = {
     // Update Keys Hint
     Shuang.core.current.beforeJudge()
     Shuang.app.setting.updateKeysHint()
-  },
-  qrShow(targetId) {
-    $('#' + targetId).style.display = 'block'
-  },
-  qrHide(target) {
-    target.style.display = 'none'
   }
 }

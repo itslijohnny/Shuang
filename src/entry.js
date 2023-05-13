@@ -8,9 +8,6 @@ const Shuang = {
     scheme: {},
     keyboardLayoutList: {},
     keyboardLayout: {},
-    emoji: {
-      right: '✅', wrong: '❎'
-    }
   },
   core: {
     model: {},

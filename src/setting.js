@@ -9,14 +9,12 @@ Shuang.app.setting = {
       mode: readStorage('mode') || 'lv4',
       showPic: readStorage('showPic') || 'true',
       darkMode: readStorage('darkMode') || 'true',
-      autoNext: readStorage('autoNext') || 'true',
-      autoClear: readStorage('autoClear') || 'true',
       showKeys: readStorage("showKeys") || "true",
       showPressedKey: readStorage("showPressedKey") || "true",
       keyboardLayout: readStorage("keyboardLayout") || 'qwerty',
     }
     /** Applying Settings :: Changing UI **/
-    const { scheme, mode, showPic, darkMode, autoNext, autoClear, showKeys, showPressedKey, keyboardLayout } = this.config
+    const { scheme, mode, showPic, darkMode, showKeys, showPressedKey, keyboardLayout } = this.config
     Array.prototype.find.call($('#scheme-select').children,
       schemeOption => Shuang.resource.schemeList[scheme].startsWith(schemeOption.innerText)
     ).selected = true
@@ -26,8 +24,6 @@ Shuang.app.setting = {
     $('#mode-select')[Object.keys(Shuang.app.modeList).indexOf(mode)].selected = true
     $('#pic-switcher').checked = showPic === 'true'
     $('#dark-mode-switcher').checked = darkMode === 'true'
-    $('#auto-next-switcher').checked = autoNext === 'true'
-    $('#auto-clear-switcher').checked = autoClear === 'true'
     $('#show-keys').checked = showKeys === 'true'
     $('#show-pressed-key').checked = showPressedKey === 'true'
     /** Applying Settings :: Invoking Actions  **/
@@ -36,8 +32,6 @@ Shuang.app.setting = {
     this.setMode(Shuang.app.modeList[mode].name)
     this.setPicVisible(showPic)
     this.setDarkMode(darkMode)
-    this.setAutoNext(autoNext)
-    this.setAutoClear(autoClear)
     this.setShowKeys(showKeys)
     this.setShowPressedKey(showPressedKey)
   },
@@ -148,14 +142,6 @@ Shuang.app.setting = {
       $('body').setAttribute('class', '')
     }
     writeStorage('darkMode', this.config.darkMode)
-  },
-  setAutoNext(bool) {
-    this.config.autoNext = bool.toString()
-    writeStorage('autoNext', this.config.autoNext)
-  },
-  setAutoClear(bool) {
-    this.config.autoClear = bool.toString()
-    writeStorage('autoClear', this.config.autoClear)
   },
   setShowKeys(bool) {
     this.config.showKeys = bool.toString()

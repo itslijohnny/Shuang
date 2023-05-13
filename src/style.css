@@ -215,22 +215,6 @@ body {
   background-color: #FFEC02;
 }
 
-.keyboard .pic {
-  width: 100%;
-  min-width: 310px;
-  max-width: 700px;
-  z-index: 1;
-  filter: invert(0.07);
-  margin: auto;
-  left: 0;
-  right: 0;
-  position: absolute;
-}
-
-.keyboard .pic-placeholder {
-  height: 300px;
-}
-
 @media screen and (min-width: 0\0) and (min-resolution: +72dpi) {
   /* IE */
   .keyboard .pic {
@@ -306,38 +290,6 @@ body {
   display: flex;
 }
 
-/* wx */
-.wx {
-  min-width: 160px;
-  position: relative;
-  float: right;
-  right: 20px;
-  z-index: 1;
-}
-
-.wx #wx-title {
-  font-weight: bold;
-  font-style: italic;
-  font-size: 14px;
-  color: #777;
-}
-
-.wx #wx-name {
-  font-weight: bold;
-  color: #319A31;
-  margin-left: 0;
-}
-
-.wx #wx-qr {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 250px;
-  height: 250px;
-  border: dashed #777 1px;
-  z-index: 1;
-}
-
 /* copyright */
 .copyright {
   min-width: 250px;
@@ -356,40 +308,6 @@ body {
   font-size: 12px;
   color: #888888;
   font-style: italic;
-}
-
-/* pay */
-.pays {
-  clear: both;
-}
-
-.pays .pay-title {
-  margin-left: 25px;
-  font-weight: bold;
-  color: #777;
-}
-
-.pays .pay-name {
-  font-weight: bold;
-  margin-left: 10px;
-}
-
-.pays #alipay {
-  color: #0087ff;
-}
-
-.pays #wxpay {
-  color: #319A31;
-}
-
-.pays img {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  width: 250px;
-  height: 250px;
-  border: dashed #777 1px;
-  z-index: 1;
 }
 
 /* dark mode */
