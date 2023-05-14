@@ -84,6 +84,13 @@ Shuang.app.action = {
     })
     window.addEventListener('resize', Shuang.app.setting.updateKeysHintLayoutRatio)
     window.resizeTo(window.outerWidth, window.outerHeight)
+    $('#option-switcher').addEventListener('click', e => {
+        if ($('#option-container').classList.contains('option-collapsed')) {
+            $('#option-container').classList.remove('option-collapsed')
+        } else {
+            $('#option-container').classList.add('option-collapsed')
+        }
+    })
 
     /** All Done **/
     this.redo()

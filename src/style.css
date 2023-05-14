@@ -24,9 +24,46 @@ body {
   text-align: center;
 }
 
-.header .menu {
-  padding: 5px 10px;
-  display: inline-block;
+#option-switcher {
+    width: 50px;
+    height: 50px;
+    border: 0;
+    cursor: pointer;
+}
+
+.dark-mode #option-switcher svg {
+    fill: white;
+}
+
+.option-switcher {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 99;
+}
+
+.option {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30%;
+    height: 100%;
+    background-color: #eee;
+    border-left: 1px solid #000;
+}
+
+.option-collapsed {
+    visibility: hidden;
+}
+
+.option .menu {
+    display: flex;
+    flex-direction: row;
+    padding: 16px;
+}
+
+.option .menu * {
+    flex: 1;
 }
 
 .menu .title {
@@ -40,8 +77,6 @@ body {
 .menu select {
   font-size: 16px;
   background-color: #eee;
-  border: dashed #000 1px;
-  width: min-content;
   height: 25px;
 }
 
@@ -78,13 +113,15 @@ body {
 .workspace .col .row input {
   font-size: 96px;
   width: 100%;
-  border: solid #eee;
+  border: 2px solid #111;
   background-color: #eee;
   -webkit-appearance: none;
   border-radius: 0;
   display: inline;
   text-transform: capitalize;
-  padding: 0;
+  padding: 10px 0;
+  text-align: center;
+  border-radius: 8px;
 }
 
 .workspace.right {
@@ -92,10 +129,6 @@ body {
 }
 .workspace.wrong {
     background-color: #ff7777;
-}
-
-.workspace .col .row input:hover {
-  border-bottom: solid #111;
 }
 
 /* keyboard */
@@ -279,6 +312,8 @@ body {
 
 /* footer */
 .footer {
+    position: absolute;
+    bottom: 0;
   margin: 20px auto;
   width: 100%;
   display: flex;
