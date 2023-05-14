@@ -26,7 +26,7 @@ Shuang.core.model = class Model {
     // else return 0
     if (val === this.answer) {
       return 2
-    } else if (val.startsWith(this.answer)) {
+    } else if (this.answer.startsWith(val)) {
       return 1
     } else {
         return 0

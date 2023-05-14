@@ -12,9 +12,10 @@ Shuang.app.setting = {
       showKeys: readStorage("showKeys") || "true",
       showPressedKey: readStorage("showPressedKey") || "true",
       keyboardLayout: readStorage("keyboardLayout") || 'qwerty',
+      batchSize: readStorage('batchSize') || 50,
     }
     /** Applying Settings :: Changing UI **/
-    const { scheme, mode, showPic, darkMode, showKeys, showPressedKey, keyboardLayout } = this.config
+    const { scheme, mode, showPic, darkMode, showKeys, showPressedKey, keyboardLayout, batchSize } = this.config
     Array.prototype.find.call($('#scheme-select').children,
       schemeOption => Shuang.resource.schemeList[scheme].startsWith(schemeOption.innerText)
     ).selected = true
@@ -34,6 +35,12 @@ Shuang.app.setting = {
     this.setDarkMode(darkMode)
     this.setShowKeys(showKeys)
     this.setShowPressedKey(showPressedKey)
+    this.setBatchSize(batchSize)
+  },
+  setBatchSize(batchSize) {
+    $('#batch-size').value = `${batchSize}`
+    writeStorage('batchSize', batchSize)
+    $('#status-line-status').innerText = `0/${batchSize}`
   },
   setScheme(schemeName, next = true) {
     this.config.scheme = Object.keys(Shuang.resource.schemeList)[
@@ -45,6 +52,7 @@ Shuang.app.setting = {
     this.updateKeysHint()
     this.updateTips()
     this.updateKeyboardLayout()
+    $('#status-line-scheme').innerText = schemeName
   },
   setKeyboardLayout(layoutName) {
     this.config.keyboardLayout = Object.keys(Shuang.resource.keyboardLayoutList)[
@@ -54,6 +62,7 @@ Shuang.app.setting = {
     writeStorage('keyboardLayout', this.config.keyboardLayout)
     this.updateKeysHint()
     this.updateKeyboardLayout()
+    $('#status-line-keyboard').innerText = layoutName
   },
   updateKeyboardLayout() {
     const currentKeyboardLayout = Shuang.resource.keyboardLayout[this.config.keyboardLayout]
@@ -118,6 +127,7 @@ Shuang.app.setting = {
       }
     }
     writeStorage('mode', this.config.mode)
+    $("#status-line-pool").innerText = modeName
   },
   setPicVisible(bool) {
     this.config.showPic = bool.toString()

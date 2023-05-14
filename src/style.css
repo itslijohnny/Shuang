@@ -24,46 +24,50 @@ body {
   text-align: center;
 }
 
+.header * {
+    flex: 1;
+}
+
 #option-switcher {
-    width: 50px;
-    height: 50px;
-    border: 0;
-    cursor: pointer;
+  width: 50px;
+  height: 50px;
+  border: 0;
+  cursor: pointer;
 }
 
 .dark-mode #option-switcher svg {
-    fill: white;
+  fill: white;
 }
 
 .option-switcher {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    z-index: 99;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 99;
 }
 
 .option {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 30%;
-    height: 100%;
-    background-color: #eee;
-    border-left: 1px solid #000;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 30%;
+  height: 100%;
+  background-color: #eee;
+  border-left: 1px solid #000;
 }
 
 .option-collapsed {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 .option .menu {
-    display: flex;
-    flex-direction: row;
-    padding: 16px;
+  display: flex;
+  flex-direction: row;
+  padding: 16px;
 }
 
 .option .menu * {
-    flex: 1;
+  flex: 1;
 }
 
 .menu .title {
@@ -115,20 +119,17 @@ body {
   width: 100%;
   border: 2px solid #111;
   background-color: #eee;
-  -webkit-appearance: none;
-  border-radius: 0;
   display: inline;
-  text-transform: capitalize;
   padding: 10px 0;
   text-align: center;
   border-radius: 8px;
 }
 
 .workspace.right {
-    background-color: #77FF77;
+  background-color: #77ff77;
 }
 .workspace.wrong {
-    background-color: #ff7777;
+  background-color: #ff7777;
 }
 
 /* keyboard */
@@ -175,11 +176,11 @@ body {
 }
 
 .keyboard .keys .underline .top .left {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .keyboard .keys .row-2 .default {
-    border-color: #0077FF;
+  border-color: #0077ff;
 }
 
 .keyboard .keys .key-container {
@@ -189,57 +190,57 @@ body {
 }
 
 .keyboard .keys .key .top {
-    display: flex;
-    flex: 2;
+  display: flex;
+  flex: 2;
 }
 
 .keyboard .keys .key .top .left {
-    display: flex;
-    flex: 1;
+  display: flex;
+  flex: 1;
 }
 
 .keyboard .keys .key .top .left .key-character {
-    margin: auto;
-    font-weight: bold;
+  margin: auto;
+  font-weight: bold;
 }
 
 .keyboard .keys .key .top .right {
-    display: flex;
-    flex: 1;
+  display: flex;
+  flex: 1;
 }
 
 .keyboard .keys .key .top .right .key-character {
-    margin: auto;
+  margin: auto;
 }
 
 .keyboard .keys .key .bottom {
-    flex: 3;
-    display: flex;
-    flex-direction: row;
+  flex: 3;
+  display: flex;
+  flex-direction: row;
 }
 
 .keyboard .keys .key .bottom .left {
-    flex: 1;
+  flex: 1;
 }
 
 .keyboard .keys .key .bottom .right {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    text-align: right;
-    padding-right: 8%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  padding-right: 8%;
 }
 
 .keyboard .keys .key .bottom .right span {
-    margin: auto;
+  margin: auto;
 }
 
 .keyboard .keys .key.answer {
-  background-color: #77FF77;
+  background-color: #77ff77;
 }
 
 .keyboard .keys .key.pressed {
-  background-color: #FFEC02;
+  background-color: #ffec02;
 }
 
 @media screen and (min-width: 0\0) and (min-resolution: +72dpi) {
@@ -250,33 +251,33 @@ body {
 }
 
 .keyboard #other-container {
-    display: flex;
-    width: 50%;
-    height: 64px;
-    margin: auto;
+  display: flex;
+  width: 50%;
+  height: 64px;
+  margin: auto;
 }
 
-.keyboard .other-container .other-key-container:last-child  {
-    border-right: 1px black solid;
+.keyboard .other-container .other-key-container:last-child {
+  border-right: 1px black solid;
 }
 
 .keyboard .other-container .other-key-container {
-    flex: 1;
-    border: 1px black solid;
-    border-right: 0;
+  flex: 1;
+  border: 1px black solid;
+  border-right: 0;
 }
 
 .keyboard .other-container .other-key-container div {
-    height: 100%;
-    display: flex;
+  height: 100%;
+  display: flex;
 }
 
 .keyboard .other-container .other-key-container div span {
-    margin: auto;
+  margin: auto;
 }
 
 .keyboard .other-container .other-key-container .other-key {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .keyboard .tips {
@@ -312,8 +313,8 @@ body {
 
 /* footer */
 .footer {
-    position: absolute;
-    bottom: 0;
+  position: absolute;
+  bottom: 0;
   margin: 20px auto;
   width: 100%;
   display: flex;
@@ -359,20 +360,20 @@ body {
 }
 
 .dark-mode .keyboard .keys .key.answer {
-  background-color: #77FF77 !important;
+  background-color: #77ff77 !important;
 }
 
 .dark-mode .keyboard .keys .key.pressed {
-  background-color: #FFEC02 !important;
+  background-color: #ffec02 !important;
 }
 
 .dark-mode .keyboard .keys .row-2 .default {
-    border-color: cyan !important;
+  border-color: cyan !important;
 }
 
 .dark-mode .workspace.right {
-    background-color: #335533 !important;
+  background-color: #335533 !important;
 }
 .dark-mode .workspace.wrong {
-    background-color: #ff7777 !important;
+  background-color: #ff7777 !important;
 }
