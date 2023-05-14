@@ -24,7 +24,7 @@ jobs:
 
     - name: Build
       run: |
-        cat .gitignore| sed 's/index.html//g' | sed 's/build//g' > .gitignore
+        cat .gitignore | sed 's/index.html//g' | sed 's/build//g' > .gitignore
         npm install
         npm run build
 

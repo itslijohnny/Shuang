@@ -55,6 +55,8 @@ Shuang.app.action = {
     Shuang.core.current = Shuang.core.model.getNextChar()
     $('#dict').innerText = Shuang.core.current.question
 
+    Shuang.app.setting.updateKeysHint()
+
     /** Listen Events **/
     document.addEventListener('keydown', e => {
       if (['Backspace', 'Tab', 'Enter', ' '].includes(e.key)) {
