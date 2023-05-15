@@ -109,28 +109,46 @@ Shuang.app.action = {
         const curVal = $('#a').value
         const curKey = curVal.slice(-1)
         Shuang.app.setting.updatePressedKeyHint(curKey);
-        switch (this.judge()) {
-          case 0:
-            $("#workspace").classList.add("wrong");
-            setTimeout(() => {
-              $("#workspace").classList.remove("wrong");
-            }, 250);
-            this.redo();
-            break;
-          case 1:
-            break;
-          case 2:
-            $("#workspace").classList.add("right");
-            setTimeout(() => {
-              $("#workspace").classList.remove("right");
-            }, 250);
-            this.next();
-            break;
-          default:
-            break;
-        }
+        setTimeout(() => {
+            if (Shuang.core.statistics.count == 0) {
+                Shuang.core.statistics.startAt = (new Date()).getTime() 
+            }
+            switch (this.judge()) {
+              case 0:
+                $("#workspace").classList.add("wrong");
+                setTimeout(() => {
+                  $("#workspace").classList.remove("wrong");
+                }, 250);
+                this.redo();
+                break;
+              case 1:
+                break;
+              case 2:
+                $("#workspace").classList.add("right");
+                setTimeout(() => {
+                  $("#workspace").classList.remove("right");
+                }, 250);
+                Shuang.core.statistics.count += 1
+                if (Shuang.core.statistics.count >= Shuang.core.statistics.batchSize) {
+                    // TODO next batch
+                    Shuang.core.statistics.count = 0
+                    startAt = 0
+                }
+                Shuang.app.setting.updateStatistics();
+                this.next();
+                break;
+              default:
+                break;
+            }
+        }, 50)
     });
 
+    setInterval(() => {
+        if (Shuang.core.statistics.startAt > 0) {
+            Shuang.core.statistics.kpm = (Shuang.core.statistics.count * 1000 * 60) / ((new Date()).getTime() - Shuang.core.statistics.startAt)
+            Shuang.app.setting.updateStatistics();
+        }
+    }, 100);
     /** All Done **/
     this.redo();
   },
@@ -173,7 +191,6 @@ Shuang.app.action = {
     }
   },
   judge() {
-    console.log($("#a").value)
     return Shuang.core.current.judge($("#a").value);
   },
   redo() {

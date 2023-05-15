@@ -39,8 +39,15 @@ Shuang.app.setting = {
   },
   setBatchSize(batchSize) {
     $('#batch-size').value = `${batchSize}`
+    Shuang.core.statistics.batchSize = batchSize
     writeStorage('batchSize', batchSize)
-    $('#status-line-status').innerText = `0/${batchSize}`
+    this.updateStatistics()
+  },
+  updateStatistics() {
+    if (Shuang.core.statistics.startAt > 0) {
+        Shuang.core.statistics.kpm = (Shuang.core.statistics.count * 1000 * 60) / ((new Date()).getTime() - Shuang.core.statistics.startAt)
+    }
+    $('#status-line-status').innerText = `${Shuang.core.statistics.count + 1}/${Shuang.core.statistics.batchSize} ${Shuang.core.statistics.kpm.toFixed(2)}kpm`
   },
   setScheme(schemeName, next = true) {
     this.config.scheme = Object.keys(Shuang.resource.schemeList)[

@@ -12,11 +12,13 @@ const Shuang = {
   core: {
     model: {},
     current: null,
-    order: {
-      shengIndex: 0,
-      yunIndex: 0
-    },
-    history: []
+    history: [],
+    statistics: {
+        count: 0,
+        startAt: 0,
+        batchSize: 50,
+        kpm: 0,
+    }
   },
   app: {
     setting: {
