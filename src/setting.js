@@ -46,9 +46,11 @@ Shuang.app.setting = {
   updateStatistics() {
     if (Shuang.core.statistics.startAt > 0) {
         Shuang.core.statistics.kpm = (Shuang.core.statistics.count * 1000 * 60) / ((new Date()).getTime() - Shuang.core.statistics.startAt)
+        Shuang.core.statistics.correctRate = Shuang.core.statistics.count == 0 ? 0 : (Shuang.core.statistics.count * 100 / (Shuang.core.statistics.countWrong + Shuang.core.statistics.count))
     }
     $('#status-line-round').innerText = `${Shuang.core.statistics.count + 1} / ${Shuang.core.statistics.batchSize}`
     $('#status-line-status').innerText = `${Shuang.core.statistics.kpm.toFixed(2)} kpm`
+    $('#status-line-rate').innerText = `${Shuang.core.statistics.correctRate.toFixed(2)} %`
   },
   setScheme(schemeName, next = true) {
     this.config.scheme = Object.keys(Shuang.resource.schemeList)[

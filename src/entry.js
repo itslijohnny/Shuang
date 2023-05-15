@@ -18,6 +18,8 @@ const Shuang = {
         startAt: 0,
         batchSize: 50,
         kpm: 0,
+        countWrong: 0,
+        correctRate: 0,
     }
   },
   app: {

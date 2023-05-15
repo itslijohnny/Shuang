@@ -119,6 +119,8 @@ Shuang.app.action = {
             setTimeout(() => {
               $("#workspace").classList.remove("wrong");
             }, 250);
+            Shuang.core.statistics.countWrong += 1;
+            Shuang.app.setting.updateStatistics();
             this.redo();
             break;
           case 1:
@@ -149,7 +151,7 @@ Shuang.app.action = {
 
     setInterval(() => {
       Shuang.app.setting.updateStatistics();
-    }, 100);
+    }, 1000);
     /** All Done **/
     this.redo();
   },
@@ -189,6 +191,7 @@ Shuang.app.action = {
   resetRound() {
     $("#a").value = ""
     Shuang.core.statistics.count = 0;
+    Shuang.core.statistics.countWrong = 0;
     Shuang.core.statistics.startAt = 0;
   },
 };
