@@ -65,18 +65,18 @@ Shuang.app.action = {
     Shuang.app.setting.updateKeysHint();
 
     /** Listen Events **/
-    // document.addEventListener("keydown", (e) => {
-    //   if (["Backspace", "Tab", "Enter", " "].includes(e.key)) {
-    //     if (e.preventDefault) {
-    //       e.preventDefault();
-    //     } else {
-    //       event.returnValue = false;
-    //     }
-    //   }
-    // });
-    // document.addEventListener("keyup", (e) => {
-    //   this.keyPressed(e);
-    // });
+    document.addEventListener("keydown", (e) => {
+      if (["Enter"].includes(e.key)) {
+        if (e.preventDefault) {
+          e.preventDefault();
+        } else {
+          event.returnValue = false;
+        }
+      }
+    });
+    document.addEventListener("keyup", (e) => {
+      this.keyPressed(e);
+    });
     $("#pic-switcher").addEventListener("change", (e) => {
       Shuang.app.setting.setPicVisible(e.target.checked);
     });
@@ -90,9 +90,9 @@ Shuang.app.action = {
       Shuang.app.setting.setShowPressedKey(e.target.checked);
     });
     $("#batch-size").addEventListener("focusout", (e) => {
-        const batchSize = $("#batch-size").value
-        Shuang.app.setting.setBatchSize(batchSize)
-    })
+      const batchSize = $("#batch-size").value;
+      Shuang.app.setting.setBatchSize(batchSize);
+    });
     window.addEventListener(
       "resize",
       Shuang.app.setting.updateKeysHintLayoutRatio
@@ -106,68 +106,13 @@ Shuang.app.action = {
       }
     });
     $("#a").addEventListener("input", (e) => {
-        const curVal = $('#a').value
-        const curKey = curVal.slice(-1)
-        Shuang.app.setting.updatePressedKeyHint(curKey);
-        setTimeout(() => {
-            if (Shuang.core.statistics.count == 0) {
-                Shuang.core.statistics.startAt = (new Date()).getTime() 
-            }
-            switch (this.judge()) {
-              case 0:
-                $("#workspace").classList.add("wrong");
-                setTimeout(() => {
-                  $("#workspace").classList.remove("wrong");
-                }, 250);
-                this.redo();
-                break;
-              case 1:
-                break;
-              case 2:
-                $("#workspace").classList.add("right");
-                setTimeout(() => {
-                  $("#workspace").classList.remove("right");
-                }, 250);
-                Shuang.core.statistics.count += 1
-                if (Shuang.core.statistics.count >= Shuang.core.statistics.batchSize) {
-                    // TODO next batch
-                    Shuang.core.statistics.count = 0
-                    startAt = 0
-                }
-                Shuang.app.setting.updateStatistics();
-                this.next();
-                break;
-              default:
-                break;
-            }
-        }, 50)
-    });
-
-    setInterval(() => {
-        if (Shuang.core.statistics.startAt > 0) {
-            Shuang.core.statistics.kpm = (Shuang.core.statistics.count * 1000 * 60) / ((new Date()).getTime() - Shuang.core.statistics.startAt)
-            Shuang.app.setting.updateStatistics();
+      const curVal = $("#a").value;
+      const curKey = curVal.slice(-1);
+      Shuang.app.setting.updatePressedKeyHint(curKey);
+      setTimeout(() => {
+        if (Shuang.core.statistics.count == 0) {
+          Shuang.core.statistics.startAt = new Date().getTime();
         }
-    }, 100);
-    /** All Done **/
-    this.redo();
-  },
-  keyPressed(e) {
-    return
-    switch (e.key) {
-      case "Backspace":
-        this.redo();
-        break;
-      case "Enter":
-      case " ":
-        if (this.judge()) {
-          this.next();
-        } else {
-          this.redo();
-        }
-        break;
-      default:
-        Shuang.app.setting.updatePressedKeyHint(e.key);
         switch (this.judge()) {
           case 0:
             $("#workspace").classList.add("wrong");
@@ -183,11 +128,39 @@ Shuang.app.action = {
             setTimeout(() => {
               $("#workspace").classList.remove("right");
             }, 250);
-            this.next();
+            Shuang.core.statistics.count += 1;
+            if (
+              Shuang.core.statistics.count >= Shuang.core.statistics.batchSize
+            ) {
+              // next batch
+              this.resetRound();
+              this.finishRound();
+              return;
+            } else {
+              Shuang.app.setting.updateStatistics();
+              this.next();
+            }
             break;
           default:
             break;
         }
+      }, 50);
+    });
+
+    setInterval(() => {
+      Shuang.app.setting.updateStatistics();
+    }, 100);
+    /** All Done **/
+    this.redo();
+  },
+  keyPressed(e) {
+    switch (e.key) {
+      case "Enter":
+        this.resetRound();
+        this.next();
+        break;
+      default:
+        break;
     }
   },
   judge() {
@@ -209,5 +182,13 @@ Shuang.app.action = {
 
     // Update Keys Hint
     Shuang.app.setting.updateKeysHint();
+  },
+  finishRound() {
+    $("#dict").innerText = `完成`;
+  },
+  resetRound() {
+    $("#a").value = ""
+    Shuang.core.statistics.count = 0;
+    Shuang.core.statistics.startAt = 0;
   },
 };

@@ -47,7 +47,8 @@ Shuang.app.setting = {
     if (Shuang.core.statistics.startAt > 0) {
         Shuang.core.statistics.kpm = (Shuang.core.statistics.count * 1000 * 60) / ((new Date()).getTime() - Shuang.core.statistics.startAt)
     }
-    $('#status-line-status').innerText = `${Shuang.core.statistics.count + 1}/${Shuang.core.statistics.batchSize} ${Shuang.core.statistics.kpm.toFixed(2)}kpm`
+    $('#status-line-round').innerText = `${Shuang.core.statistics.count + 1} / ${Shuang.core.statistics.batchSize}`
+    $('#status-line-status').innerText = `${Shuang.core.statistics.kpm.toFixed(2)} kpm`
   },
   setScheme(schemeName, next = true) {
     this.config.scheme = Object.keys(Shuang.resource.schemeList)[
@@ -163,15 +164,6 @@ Shuang.app.setting = {
   setShowPressedKey(bool) {
     this.config.showPressedKey = bool.toString()
     writeStorage('showPressedKey', this.config.showPressedKey)
-  },
-  setDisableMobileKeyboard(bool) {
-    this.config.disableMobileKeyboard = bool.toString()
-    if (this.config.disableMobileKeyboard === 'true') {
-      $('#a').setAttribute('inputmode', 'none')
-    } else if (this.config.disableMobileKeyboard === 'false') {
-      $('#a').setAttribute('inputmode', 'text')
-    }
-    writeStorage('disableMobileKeyboard', this.config.disableMobileKeyboard)
   },
   updateKeysHint() {
     const keys = $$('.key')
