@@ -1,7 +1,7 @@
 Shuang | 双拼练习
 ----
 
-[![Build](https://github.com/er1c-zh/Shuang/actions/workflows/publish.yml/badge.svg?branch=master)](https://github.com/er1c-zh/Shuang/actions/workflows/publish.yml)
+[![Build](https://github.com/itslijohnny/Shuang/actions/workflows/publish.yml/badge.svg?branch=master)](https://github.com/itslijohnny/Shuang/actions/workflows/publish.yml)
 
 [https://johnnyli.cc/Shuang](https://johnnyli.cc/Shuang)
 
